@@ -1,4 +1,4 @@
-# 🦁 Welcome to Team CUITS Repo for the NASA SUITS Challenge (2023-2024)! 🚀💻
+# 🦁 Welcome to the Lunar Lions Team Repo for the NASA SUITS Challenge (2025)! 🚀💻
 This repo is for developing our EVA Astronaut assistance program on the Hololens 2
 
 
