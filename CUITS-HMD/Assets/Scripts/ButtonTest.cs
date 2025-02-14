@@ -9,6 +9,7 @@ public class ButtonTest : MonoBehaviour
     public TextMeshProUGUI numberText; // TextMeshPro object
     int counter;
 
+    // Increments counter everytime ButtonPress() is called
     public void ButtonPress()
     {
         counter++;
