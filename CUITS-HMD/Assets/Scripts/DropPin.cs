@@ -1,40 +1,3 @@
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-// using Microsoft.MixedReality.Toolkit.UI;
-// using TMPro;
-
-// public class DropPin : MonoBehaviour
-// {
-//     [SerializeField] public GameObject pin;
-//     public TextMeshProUGUI test;
-
-//     // Start is called before the first frame update
-//     void Start()
-//     {
-//         if (pin != null)
-//         {
-//             pin.SetActive(true); // You can start with it visible
-//         }
-        
-//     }
-
-//     public void ButtonPress()
-//     {
-//         // Toggle the sprite visibility on button press
-//         if (pin != null)
-//         {
-//             pin.SetActive(!pin.activeSelf); // Toggle visibility
-//         }
-//     }
-
-//     // Update is called once per frame
-//     void Update()
-//     {
-        
-//     }
-// }
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,16 +5,19 @@ using TMPro;
 
 public class DropPin : MonoBehaviour
 {
+    public GameObject pin; // Reference to the pin sprite (the object you want to control)
 
-    public GameObject pin;
-
-    // Increments counter everytime ButtonPress() is called
+    // Increments counter every time ButtonPress() is called
     public void ButtonPress()
     {
-        // Toggle the sprite visibility on button press
+        // Check if the pin exists
         if (pin != null)
         {
-            pin.SetActive(!pin.activeSelf); // Toggle visibility
+            // Make the pin visible (if it's not already) by setting active to true
+            pin.SetActive(true);
+
+            // Move the pin to the new position
+            pin.transform.localPosition = new Vector3(0, 0, -0.05f);
         }
     }
     
@@ -60,13 +26,14 @@ public class DropPin : MonoBehaviour
     {
         if (pin != null)
         {
-            pin.SetActive(true); // You can start with it visible
+            // Set the pin to be invisible at the start
+            pin.SetActive(false); // Initially hide the pin
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // You could add other code to handle input or animations here if needed
     }
 }
