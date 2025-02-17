@@ -4211,7 +4211,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e693c1b7b41af45dab21b8c1769c9f63, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2905edde5775d744d86a1c070fb6af37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6727,7 +6727,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2671757555763053805
 Transform:
   m_ObjectHideFlags: 0
@@ -7208,6 +7208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TSS: {fileID: 0}
+  TSSc: {fileID: 0}
   display: {fileID: 7558074323816840697}
   check: {fileID: 0}
 --- !u!1 &5683679546042916805
@@ -8587,7 +8588,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!1 &8371591621466399947
 GameObject:
   m_ObjectHideFlags: 0
