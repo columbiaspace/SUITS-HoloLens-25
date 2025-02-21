@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
 
     public void showMainScreen(){
         hideAllScreens();
-        AnalysisScreenObj.SetActive(true);
+        MainMenuObj.SetActive(true);
     }
 
     public void showDatabaseScreen(){
