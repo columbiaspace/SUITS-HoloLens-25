@@ -1,46 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using Unity.Profiling;
-using UnityEngine.Serialization;
-using UnityEngine.XR.Interaction.Toolkit;
-using Newtonsoft.Json;
-
-
 using TMPro;
-using Unity.VisualScripting;
-using System;
-using System.Xml;
 
-public class evaTime : MonoBehaviour
+public class EvaTime : MonoBehaviour
 {
-   public TSS_DATA TSS;
-   public TSScConnection TSSc;
-   public TMP_Text display; 
-   public TMP_Text check;
+    public TMP_Text display; // Assign this in Unity Inspector
+    private float elapsedTime = 0f; // Start at 0:00
+    private bool timerActive = false; // Timer starts paused
 
-   int minutes;
-   int seconds;
-   int time_in_secs;
-    // Start is called before the first frame update
     void Start()
     {
-        
+        display.text = "0:00"; // Initial display
     }
 
-    // Update is called once per frame
     void Update()
     {
-       if(TSSc.connected ==true){
-       time_in_secs = TSS.tel.telemetry.eva_time;
-       minutes = time_in_secs / 60;
-       seconds = time_in_secs % 60;
-       if(seconds >= 10){
-       display.text = minutes.ToString() + ":" + seconds.ToString(); 
-       }else{
-       display.text = minutes.ToString() + ":"  + "0" + seconds.ToString() ;
-       }
-       }
+        // Check if any button is pressed (Input.GetButton or Input.anyKey)
+        if (!timerActive && (Input.anyKeyDown || Input.GetMouseButtonDown(0))) // Can use other conditions if you want more specific buttons
+        {
+            timerActive = true;
+        }
+
+        // If the timer is active, count up the time
+        if (timerActive)
+        {
+            elapsedTime += Time.deltaTime;
+
+            int minutes = Mathf.FloorToInt(elapsedTime / 60);
+            int seconds = Mathf.FloorToInt(elapsedTime % 60);
+
+            display.text = $"{minutes}:{seconds:D2}"; // Format the timer correctly
+        }
     }
 }
