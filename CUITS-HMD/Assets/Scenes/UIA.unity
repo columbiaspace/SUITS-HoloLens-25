@@ -188,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 142196108}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0.6, y: 1.5, z: 0.5}
   m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -506,6 +506,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362887047}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &380110654 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6810842146961840371, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
+  m_PrefabInstance: {fileID: 6866324718072219344}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bed8ce635bcf94273b78fa375cac3993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &384684343
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 531161203}
   - component: {fileID: 531161204}
+  - component: {fileID: 531161205}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -616,7 +628,7 @@ Transform:
   m_GameObject: {fileID: 531161202}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 1, z: 0.3}
+  m_LocalPosition: {x: 0.5, y: 1.5, z: 0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -637,6 +649,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 142196109}
+  targetPos: {x: 0, y: 0, z: 0}
+  myPos: {x: 0, y: 0, z: 0}
+--- !u!114 &531161205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531161202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b20b2c60435394674a0181484b495e24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tssIPAddress: 127.0.0.1
+  tssPort: 14141
+  localPort: 14142
 --- !u!1 &547309909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,6 +1494,18 @@ MonoBehaviour:
       - m_Target: {fileID: 547309913}
         m_TargetAssemblyTypeName: ArrowToggler, Assembly-CSharp
         m_MethodName: ToggleArrowVisibility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 380110654}
+        m_TargetAssemblyTypeName: ButtonTest, Assembly-CSharp
+        m_MethodName: ButtonPress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5960,6 +6001,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Testing
       objectReference: {fileID: 0}
+    - target: {fileID: 2057105775094682430, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2487727512245139259, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
@@ -6011,25 +6056,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5707282673954331440, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 423836321321935766, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5496325274401737030, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1425660829778331322, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 9147043974652612977, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 1362060566287769236, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c57c39655c2e4e4db10a70d9574478c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
