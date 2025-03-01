@@ -37,4 +37,10 @@ public class UIManager : MonoBehaviour
         AnalysisScreenObj.SetActive(true);
     }
 
+    // public void showViewDatabaseScreen(){
+    //     hideAllScreens();
+    //     ViewDatabaseObj.SetActive(true);
+    // }
+
+
 }
