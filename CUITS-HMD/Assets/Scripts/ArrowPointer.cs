@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ArrowPointer : MonoBehaviour
@@ -9,39 +11,46 @@ public class ArrowPointer : MonoBehaviour
 
     private TSSCommunicator TSS;
 
+    private float x;
+    private float y;
+
+    
+
     void Start(){
         TSS = FindObjectOfType(typeof(TSSCommunicator)) as TSSCommunicator;
     }
 
-    void Update()
+    async Task Update()
     {
         targetPos = target.position;
-        //myPos = transform.position;
+        //targetPos = new Vector3(target.position.x, 0, target.position.);
 
-        float x = 0;
-        float y = 0;
-        
-        TSS.SendCommand(0, 17, 0);
-        x = TSS.LastOutputData;
+        // Send command for x position and wait for response
+        await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 17, 0);
+        if (TSS.HasNewData && TSS.LastCommandNumber == 17)
+        {
+            x = TSS.LastOutputData;
+            TSS.setHasNewDataFalse();
+        }
 
-        TSS.SendCommand(0, 18, 0);
-        y = TSS.LastOutputData;
+        // Send command for y position and wait for response
+        await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 18, 0);
+        if (TSS.HasNewData && TSS.LastCommandNumber == 18)
+        {
+            y = TSS.LastOutputData;
+            TSS.setHasNewDataFalse();
+        }
 
-        myPos = new Vector3(x, y, transform.position.z);
+        //myPos = new Vector3(x, y, transform.position.z);
+        myPos = new Vector3(x, transform.position.y, y);
+        transform.position = myPos;
+        Debug.Log($"Position updated - x: {x}, y: {y}");
 
-        
-
-        // Ensure the target is set
         if (target != null)
         {
-            // Calculate the direction vector from the arrow to the target
             Vector3 direction = targetPos - myPos;
-
-            // Use Quaternion.LookRotation to rotate the arrow towards the target
             Vector3 upwards = Vector3.forward;
             Quaternion rotation = Quaternion.LookRotation(direction, upwards);
-
-            // Apply the rotation, ensuring the arrow points correctly along its forward axis
             transform.rotation = rotation;
         }
     }

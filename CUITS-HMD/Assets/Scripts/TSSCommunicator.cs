@@ -4,6 +4,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using UnityEngine;
+using System.Threading.Tasks;
+
+using System.Text.Json;
+
 
 public class TSSCommunicator : MonoBehaviour
 {
@@ -11,6 +15,12 @@ public class TSSCommunicator : MonoBehaviour
     private Thread receiveThread;
 
     // Properties to store the latest received data
+
+    // public class TSSData {
+    //     public uint Timestamp { get; set; }
+    //     public uint CommandNumber { get; set; }
+    //     public float OutputData { get; set; }
+    // }
     public uint LastTimestamp { get; private set; }
     public uint LastCommandNumber { get; private set; }
     public float LastOutputData { get; private set; }
@@ -45,6 +55,10 @@ public class TSSCommunicator : MonoBehaviour
 
             SendCommand(timestamp, commandNumber, inputData);
         }
+    }
+
+    public void setHasNewDataFalse(){
+        HasNewData = false;
     }
  
 
@@ -81,7 +95,7 @@ public class TSSCommunicator : MonoBehaviour
                     LastOutputData = BitConverter.ToSingle(outputDataBytes, 0);
                     HasNewData = true;
 
-                    Debug.Log($"Received Response - Timestamp: {LastTimestamp}, Command: {LastCommandNumber}, Output Data: {LastOutputData}");
+                    //Debug.Log($"Received Response - Timestamp: {LastTimestamp}, Command: {LastCommandNumber}, Output Data: {LastOutputData}");
                 }
                 else
                 {
@@ -95,7 +109,7 @@ public class TSSCommunicator : MonoBehaviour
         }
     }
 
-    public void SendCommand(uint timestamp, uint commandNumber, float inputData)
+    public async Task SendCommand(uint timestamp, uint commandNumber, float inputData)
     {
         try
         {
@@ -117,9 +131,9 @@ public class TSSCommunicator : MonoBehaviour
             Array.Copy(inputDataBytes, 0, packet, 8, 4);
 
             IPEndPoint tssEndPoint = new IPEndPoint(IPAddress.Parse(tssIPAddress), tssPort);
-            udpClient.Send(packet, packet.Length, tssEndPoint);
+            await udpClient.SendAsync(packet, packet.Length, tssEndPoint);
 
-            Debug.Log($"Sent Command - Timestamp: {timestamp}, Command: {commandNumber}, Input Data: {inputData}");
+            //Debug.Log($"Sent Command - Timestamp: {timestamp}, Command: {commandNumber}, Input Data: {inputData}");
         }
         catch (Exception e)
         {
