@@ -8,12 +8,13 @@ public class MapZoom : MonoBehaviour
 
     private void Start()
     {
-        //zoomedRockYardMap.SetActive(false);  // Initially hide the zoomedRockYardMap sprite
+        zoomedRockYardMap.SetActive(false);  // Initially hide the zoomedRockYardMap sprite
         MapZoomDisplay.onClick.AddListener(ToggleSprite);  // Set up button to call ToggleSprite method when clicked
     }
 
     public void ToggleSprite()
     {
         zoomedRockYardMap.SetActive(!zoomedRockYardMap.activeSelf);  // Toggle the visibility of the zoomedRockYardMap sprite
+        print("Adwerw");
     }
 }
