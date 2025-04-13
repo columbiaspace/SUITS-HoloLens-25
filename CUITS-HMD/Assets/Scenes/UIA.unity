@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731722, g: 0.13414752, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.1341472, b: 0.121078566, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d5b11ceab5b40b7926622541e0900e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomedRockYardMap: {fileID: 0}
+  zoomedRockYardMap: {fileID: 1724083051}
   MapZoomDisplay: {fileID: 0}
 --- !u!4 &42104860 stripped
 Transform:
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d5b11ceab5b40b7926622541e0900e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomedRockYardMap: {fileID: 0}
+  zoomedRockYardMap: {fileID: 1724083051}
   MapZoomDisplay: {fileID: 0}
 --- !u!4 &1197301116
 Transform:
@@ -2129,11 +2129,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6158099105843805383, guid: 63232efbe4f6ab74489b56508d9ba70f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleMap
+      value: ToggleSprite
       objectReference: {fileID: 0}
     - target: {fileID: 6158099105843805383, guid: 63232efbe4f6ab74489b56508d9ba70f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ToggleTexture, Assembly-CSharp
+      value: MapZoom, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6158099105843805383, guid: 63232efbe4f6ab74489b56508d9ba70f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
