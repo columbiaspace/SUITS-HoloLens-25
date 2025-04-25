@@ -15,11 +15,13 @@ public class UIManager : MonoBehaviour
     public GameObject MainMenuObj;
     public GameObject AnalysisScreenObj;
     public GameObject ViewDatabaseObj;
+    public GameObject LoadingScreenObj;
 
     public void hideAllScreens(){
         MainMenuObj.SetActive(false);
         AnalysisScreenObj.SetActive(false);
         ViewDatabaseObj.SetActive(false);
+        LoadingScreenObj.SetActive(true);
     }
 
     public void showMainScreen(){
@@ -35,6 +37,11 @@ public class UIManager : MonoBehaviour
     public void showRockAnalysisScreen(){
         hideAllScreens();
         AnalysisScreenObj.SetActive(true);
+    }
+
+    public void showLoadingScreen(){
+        hideAllScreens();
+        LoadingScreenObj.SetActive(true);
     }
 
     // public void showViewDatabaseScreen(){
