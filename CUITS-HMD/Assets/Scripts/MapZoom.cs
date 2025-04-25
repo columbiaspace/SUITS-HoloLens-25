@@ -4,7 +4,9 @@ using UnityEngine.UI;
 public class MapZoom : MonoBehaviour
 {
     public GameObject zoomedRockYardMap;  // This is your map sprite GameObject
+    public GameObject zoomedOutRockYardMap;
     public Button MapZoomDisplay;         // This is your button that will trigger the sprite visibility
+
 
     private void Start()
     {
@@ -15,6 +17,6 @@ public class MapZoom : MonoBehaviour
     public void ToggleSprite()
     {
         zoomedRockYardMap.SetActive(!zoomedRockYardMap.activeSelf);  // Toggle the visibility of the zoomedRockYardMap sprite
-        print("Adwerw");
+        zoomedOutRockYardMap.SetActive(!zoomedOutRockYardMap.activeSelf);  // Toggle the visibility of the zoomedOutRockYardMap sprite
     }
 }
