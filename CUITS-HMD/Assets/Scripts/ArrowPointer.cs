@@ -41,10 +41,19 @@ public class ArrowPointer : MonoBehaviour
             TSS.setHasNewDataFalse();
         }
 
+        // testing the TSS
+        await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 61, 1);
+        if (TSS.HasNewData && TSS.LastCommandNumber == 61)
+        {
+            print("test");
+            print("data " + TSS.LastOutputData);
+            TSS.setHasNewDataFalse();
+        }
+
         //myPos = new Vector3(x, y, transform.position.z);
         myPos = new Vector3(x, transform.position.y, y);
         transform.position = myPos;
-        Debug.Log($"Position updated - x: {x}, y: {y}");
+        //Debug.Log($"Position updated - x: {x}, y: {y}");
 
         if (target != null)
         {
