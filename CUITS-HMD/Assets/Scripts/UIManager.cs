@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject MainMenuObj;
     public GameObject AnalysisScreenObj;
     public GameObject ViewDatabaseObj;
+    
 
     public TextMeshProUGUI analysisOutputText; // Assign this in the inspector
     private RockAnalyzer analyzer;
@@ -30,6 +31,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void showMainScreen(){
+        Debug.Log("Back button pressed, going to Main Menu.");
         hideAllScreens();
         MainMenuObj.SetActive(true);
     }
@@ -56,7 +58,7 @@ public class UIManager : MonoBehaviour
 
         Debug.Log("Finished fetching data from server.");
 
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
 
         // Build output string
         string output = "EVA1 chemical composition:\n";
@@ -71,6 +73,8 @@ public class UIManager : MonoBehaviour
 
         // Now show the analysis screen
         AnalysisScreenObj.SetActive(true);
+
+        Debug.Log("Finished coroutine completely");
     }
 
 
