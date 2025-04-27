@@ -2,7 +2,6 @@
   "dependencies": {
     "com.microsoft.mrtk.graphicstools.unity": "file:MixedReality/com.microsoft.mrtk.graphicstools.unity-0.6.7.tgz",
     "com.microsoft.mrtk.tts.windows": "file:MixedReality/com.microsoft.mrtk.tts.windows-1.0.4.tgz",
-    "com.microsoft.windows.mixedreality.dotnetwinrt": "file:MixedReality/com.microsoft.windows.mixedreality.dotnetwinrt-0.5.2009.tgz",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.development": "1.0.1",
     "com.unity.nuget.newtonsoft-json": "3.2.1",
@@ -10,7 +9,6 @@
     "com.unity.timeline": "1.7.5",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.8.0",
-    "com.unity.xr.openxr": "1.8.2",
     "org.mixedrealitytoolkit.accessibility": "file:MixedReality/org.mixedrealitytoolkit.accessibility-1.0.1-pre.19.tgz",
     "org.mixedrealitytoolkit.audio": "file:MixedReality/org.mixedrealitytoolkit.audio-3.0.1.tgz",
     "org.mixedrealitytoolkit.core": "file:MixedReality/org.mixedrealitytoolkit.core-3.1.1.tgz",

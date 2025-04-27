@@ -1,16 +1,5 @@
 {
   "dependencies": {
-    "com.microsoft.mixedreality.openxr": {
-      "version": "file:MixedReality/com.microsoft.mixedreality.openxr-1.10.0.tgz",
-      "depth": 0,
-      "source": "local-tarball",
-      "dependencies": {
-        "com.unity.xr.arfoundation": "4.1.7",
-        "com.unity.xr.management": "4.2.0",
-        "com.unity.xr.openxr": "1.7.0",
-        "com.unity.xr.core-utils": "2.1.0"
-      }
-    },
     "com.microsoft.mrtk.graphicstools.unity": {
       "version": "file:MixedReality/com.microsoft.mrtk.graphicstools.unity-0.6.7.tgz",
       "depth": 0,
@@ -19,6 +8,12 @@
     },
     "com.microsoft.mrtk.tts.windows": {
       "version": "file:MixedReality/com.microsoft.mrtk.tts.windows-1.0.4.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {}
+    },
+    "com.microsoft.windows.mixedreality.dotnetwinrt": {
+      "version": "file:MixedReality/com.microsoft.windows.mixedreality.dotnetwinrt-0.5.2009.tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {}
@@ -155,9 +150,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"
@@ -186,13 +181,13 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.ui": "1.0.0",
         "com.unity.inputsystem": "1.3.0",
+        "com.unity.mathematics": "1.2.5",
         "com.unity.xr.core-utils": "2.1.0",
         "com.unity.xr.management": "4.0.1",
-        "com.unity.ugui": "1.0.0",
-        "com.unity.mathematics": "1.2.5",
         "com.unity.modules.particlesystem": "1.0.0",
-        "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.unityanalytics": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
@@ -212,8 +207,8 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.inputsystem": "1.3.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.inputsystem": "1.3.0",
         "com.unity.xr.core-utils": "2.2.0",
         "com.unity.xr.management": "4.0.1"
       },
@@ -224,14 +219,14 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
+        "com.unity.ugui": "1.0.0",
         "com.unity.inputsystem": "1.5.0",
         "com.unity.mathematics": "1.2.6",
-        "com.unity.ugui": "1.0.0",
-        "com.unity.xr.core-utils": "2.2.1",
-        "com.unity.xr.legacyinputhelpers": "2.1.10",
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.imgui": "1.0.0",
-        "com.unity.modules.physics": "1.0.0"
+        "com.unity.xr.core-utils": "2.2.1",
+        "com.unity.modules.physics": "1.0.0",
+        "com.unity.xr.legacyinputhelpers": "2.1.10"
       },
       "url": "https://packages.unity.com"
     },
@@ -250,9 +245,9 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.modules.vr": "1.0.0",
         "com.unity.modules.xr": "1.0.0",
+        "com.unity.modules.subsystems": "1.0.0",
         "com.unity.xr.legacyinputhelpers": "2.1.7"
       },
       "url": "https://packages.unity.com"
@@ -262,10 +257,10 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.xr.management": "4.0.1",
-        "com.unity.xr.legacyinputhelpers": "2.1.2",
         "com.unity.inputsystem": "1.4.4",
-        "com.unity.xr.core-utils": "2.1.1"
+        "com.unity.xr.core-utils": "2.1.1",
+        "com.unity.xr.management": "4.0.1",
+        "com.unity.xr.legacyinputhelpers": "2.1.2"
       },
       "url": "https://packages.unity.com"
     },
