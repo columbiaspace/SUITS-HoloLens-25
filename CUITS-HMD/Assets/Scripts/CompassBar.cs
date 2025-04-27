@@ -55,6 +55,14 @@ public class CompassBar : MonoBehaviour
             TSS.setHasNewDataFalse();
             print("Received Heading: " + heading);
         }
+
+        // await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 58, 0);
+        // if (TSS.HasNewData && TSS.LastCommandNumber == 58)
+        // {
+        //     float time = TSS.LastOutputData;  // heading in degrees (0-360)
+        //     TSS.setHasNewDataFalse();
+        //     print("Time: " + time);
+        // }
     }
 
     private void UpdateCompass()
@@ -62,7 +70,7 @@ public class CompassBar : MonoBehaviour
         float normalizedHeading = heading / maxHeading;  // Normalize between 0 and 1
         float xOffset = normalizedHeading * compassWidth;
 
-        print("Norm Heading: " + normalizedHeading);
+        //print("Norm Heading: " + normalizedHeading);
 
         compassImage.anchoredPosition = new Vector2(-xOffset, compassImage.anchoredPosition.y);
     }
