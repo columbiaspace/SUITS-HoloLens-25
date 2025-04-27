@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.1341472, b: 0.121078566, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731722, g: 0.13414752, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 15892356}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d5b11ceab5b40b7926622541e0900e, type: 3}
   m_Name: 
@@ -226,6 +226,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3986026752643185623, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.011
+      objectReference: {fileID: 0}
+    - target: {fileID: 3986026752643185623, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.011
+      objectReference: {fileID: 0}
+    - target: {fileID: 3986026752643185623, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.011
+      objectReference: {fileID: 0}
     - target: {fileID: 4339591149977187517, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -253,6 +265,22 @@ PrefabInstance:
     - target: {fileID: 4875196519158606709, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460251742099725586, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460251742099725586, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460251742099725586, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5460251742099725586, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5797753181822705129, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
       propertyPath: m_Enabled
@@ -2423,7 +2451,7 @@ PrefabInstance:
       objectReference: {fileID: 1197301115}
     - target: {fileID: 6158099105843805383, guid: 63232efbe4f6ab74489b56508d9ba70f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6158099105843805383, guid: 63232efbe4f6ab74489b56508d9ba70f, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
