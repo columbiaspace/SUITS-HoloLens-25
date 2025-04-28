@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     public GameObject MainMenuObj;
     public GameObject AnalysisScreenObj;
     public GameObject ViewDatabaseObj;
+    public GameObject AddNotesObj;
+
     public TextMeshProUGUI analysisOutputText; // Assign this in the inspector
     private RockAnalyzer analyzer;
     public TextMeshProUGUI databaseOutputText;
@@ -68,12 +70,19 @@ public class UIManager : MonoBehaviour
         MainMenuObj.SetActive(false);
         AnalysisScreenObj.SetActive(false);
         ViewDatabaseObj.SetActive(false);
+        AddNotesObj.SetActive(false);
     }
 
     public void showMainScreen(){
-        Debug.Log("Back button pressed, going to Main Menu.");
+        Debug.Log("Back button pressed");
         hideAllScreens();
         MainMenuObj.SetActive(true);
+    }
+
+    public void showAddNotesScreen(){
+        Debug.Log("Add Notes button pressed.");
+        hideAllScreens();
+        AddNotesObj.SetActive(true);
     }
 
     // public void showDatabaseScreen(){
@@ -113,6 +122,13 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Run Analysis Button Clicked");
         StartCoroutine(showAnalysisScreenCoroutine()); // <-- StartCoroutine required
+    }
+
+    public void showRockAnalysisScreenNoRun()
+    {
+        Debug.Log("Back to Show Analysis screen");
+        hideAllScreens();
+        AnalysisScreenObj.SetActive(true);
     }
 
     public IEnumerator showAnalysisScreenCoroutine()
