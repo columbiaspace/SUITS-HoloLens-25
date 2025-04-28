@@ -1,8 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO; // <-- For saving files
+using System.Linq; // <-- For using Max()
+using Newtonsoft.Json; // <-- For JSON serialization (you might need to install it)
 using UnityEngine;
-using UnityEngine.UI; // if you use Text
-using TMPro; // if you use TextMeshProUGUI
+using UnityEngine.UI;
+using TMPro;
+
+
 
 public class UIManager : MonoBehaviour
 {
@@ -13,16 +18,51 @@ public class UIManager : MonoBehaviour
     public GameObject MainMenuObj;
     public GameObject AnalysisScreenObj;
     public GameObject ViewDatabaseObj;
-    
-
     public TextMeshProUGUI analysisOutputText; // Assign this in the inspector
     private RockAnalyzer analyzer;
+    public TextMeshProUGUI databaseOutputText;
+
+
+    private List<RockAnalysisEntry> rockAnalysisDatabase = new List<RockAnalysisEntry>();
+    private string saveFilePath;
+
+    // private void Start()
+    // {
+    //     analyzer = GetComponent<RockAnalyzer>();
+    //     showMainScreen();
+    // }
 
     private void Start()
     {
         analyzer = GetComponent<RockAnalyzer>();
+        saveFilePath = Path.Combine(Application.persistentDataPath, "rock_analysis_database.json");
+
+        LoadDatabase();
         showMainScreen();
     }
+
+    private void SaveDatabase()
+    {
+        string json = JsonConvert.SerializeObject(rockAnalysisDatabase, Formatting.Indented);
+        File.WriteAllText(saveFilePath, json);
+        Debug.Log($"Database saved to {saveFilePath}");
+    }
+
+    private void LoadDatabase()
+    {
+        if (File.Exists(saveFilePath))
+        {
+            string json = File.ReadAllText(saveFilePath);
+            rockAnalysisDatabase = JsonConvert.DeserializeObject<List<RockAnalysisEntry>>(json);
+            Debug.Log($"Database loaded with {rockAnalysisDatabase.Count} entries.");
+        }
+        else
+        {
+            Debug.Log("No database file found, starting new.");
+            rockAnalysisDatabase = new List<RockAnalysisEntry>();
+        }
+    }
+
 
     public void hideAllScreens(){
         MainMenuObj.SetActive(false);
@@ -36,9 +76,37 @@ public class UIManager : MonoBehaviour
         MainMenuObj.SetActive(true);
     }
 
-    public void showDatabaseScreen(){
+    // public void showDatabaseScreen(){
+    //     hideAllScreens();
+    //     ViewDatabaseObj.SetActive(true);
+    // }
+
+    public void showDatabaseScreen()
+    {
         hideAllScreens();
         ViewDatabaseObj.SetActive(true);
+
+        string databaseOutput = "Stored Rock Analyses:\n\n";
+
+        foreach (var entry in rockAnalysisDatabase)
+        {
+            databaseOutput += $"Analysis ID: {entry.id}\n";
+            databaseOutput += $"Timestamp: {entry.timestamp}\n";
+            foreach (var kvp in entry.chemicalData)
+            {
+                databaseOutput += $"{kvp.Key}: {kvp.Value}\n";
+            }
+            databaseOutput += "\n";
+        }
+
+        if (databaseOutputText != null)
+        {
+            databaseOutputText.text = databaseOutput;
+        }
+        else
+        {
+            Debug.LogWarning("databaseOutputText is NULL!");
+        }
     }
 
     public void showRockAnalysisScreen()
@@ -73,6 +141,13 @@ public class UIManager : MonoBehaviour
 
         // Now show the analysis screen
         AnalysisScreenObj.SetActive(true);
+
+        // Create new entry and save it
+        int newId = rockAnalysisDatabase.Count > 0 ? rockAnalysisDatabase.Max(entry => entry.id) + 1 : 1;
+        RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results);
+
+        rockAnalysisDatabase.Add(newEntry);
+        SaveDatabase();
 
         Debug.Log("Finished coroutine completely");
     }
