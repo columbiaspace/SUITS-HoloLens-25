@@ -20,6 +20,13 @@ public class UIManager : MonoBehaviour
     public GameObject ViewDatabaseObj;
     public GameObject AddNotesObj;
 
+    // Input fields
+    public TMP_InputField OtherNotesInput;
+    public TMP_Dropdown ColorDrop;
+    public TMP_Dropdown TextureDrop;
+    public TMP_Dropdown SizeDrop;
+
+    //output text that is rendered
     public TextMeshProUGUI analysisOutputText; // Assign this in the inspector
     private RockAnalyzer analyzer;
     public TextMeshProUGUI databaseOutputText;
@@ -27,6 +34,7 @@ public class UIManager : MonoBehaviour
 
     private List<RockAnalysisEntry> rockAnalysisDatabase = new List<RockAnalysisEntry>();
     private string saveFilePath;
+    private RockAnalysisEntry currentEntryBeingEdited; // Store current entry
 
     // private void Start()
     // {
@@ -38,6 +46,7 @@ public class UIManager : MonoBehaviour
     {
         analyzer = GetComponent<RockAnalyzer>();
         saveFilePath = Path.Combine(Application.persistentDataPath, "rock_analysis_database.json");
+        Debug.Log(Application.persistentDataPath);
 
         LoadDatabase();
         showMainScreen();
@@ -83,7 +92,37 @@ public class UIManager : MonoBehaviour
         Debug.Log("Add Notes button pressed.");
         hideAllScreens();
         AddNotesObj.SetActive(true);
+
+        //clear fields
+        ColorDrop.value = 0;
+        TextureDrop.value = 0;
+        SizeDrop.value = 0;
+        OtherNotesInput.text = "";
     }
+
+    public void submitNotes()
+    {
+        if (currentEntryBeingEdited != null)
+        {
+            currentEntryBeingEdited.color = ColorDrop.options[ColorDrop.value].text;
+            currentEntryBeingEdited.texture = TextureDrop.options[TextureDrop.value].text;
+            currentEntryBeingEdited.size = SizeDrop.options[SizeDrop.value].text;
+            currentEntryBeingEdited.otherNotes = OtherNotesInput.text;
+
+
+            SaveDatabase();
+        }
+        else
+        {
+            Debug.LogWarning("No current entry being edited!");
+        }
+
+        // Go back to the Run Analysis screen
+        hideAllScreens();
+        AnalysisScreenObj.SetActive(true);
+    }
+
+
 
     // public void showDatabaseScreen(){
     //     hideAllScreens();
@@ -95,18 +134,28 @@ public class UIManager : MonoBehaviour
         hideAllScreens();
         ViewDatabaseObj.SetActive(true);
 
-        string databaseOutput = "Stored Rock Analyses:\n\n";
+        string databaseOutput = "";
 
         foreach (var entry in rockAnalysisDatabase)
         {
             databaseOutput += $"Analysis ID: {entry.id}\n";
             databaseOutput += $"Timestamp: {entry.timestamp}\n";
+            
+            // Show Chemical Composition
             foreach (var kvp in entry.chemicalData)
             {
                 databaseOutput += $"{kvp.Key}: {kvp.Value}\n";
             }
+
+            // Show Astronaut Notes
+            databaseOutput += $"Color: {entry.color}\n";
+            databaseOutput += $"Size: {entry.size}\n";
+            databaseOutput += $"Texture: {entry.texture}\n";
+            databaseOutput += $"Other Notes: {entry.otherNotes}\n";
+            
             databaseOutput += "\n";
         }
+
 
         if (databaseOutputText != null)
         {
@@ -161,6 +210,7 @@ public class UIManager : MonoBehaviour
         // Create new entry and save it
         int newId = rockAnalysisDatabase.Count > 0 ? rockAnalysisDatabase.Max(entry => entry.id) + 1 : 1;
         RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results);
+        currentEntryBeingEdited = newEntry;
 
         rockAnalysisDatabase.Add(newEntry);
         SaveDatabase();

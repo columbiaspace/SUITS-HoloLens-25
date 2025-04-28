@@ -31,7 +31,7 @@ public class RockAnalysisEntry
 
     // New fields for astronaut notes
     public string color;
-    public string shape;
+    public string size;
     public string texture;
     public string otherNotes;
 
@@ -43,7 +43,7 @@ public class RockAnalysisEntry
 
         // Initialize notes as empty
         this.color = "";
-        this.shape = "";
+        this.size = "";
         this.texture = "";
         this.otherNotes = "";
     }
