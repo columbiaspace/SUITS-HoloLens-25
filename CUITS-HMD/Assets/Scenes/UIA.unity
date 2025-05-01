@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731722, g: 0.13414752, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -155,15 +155,15 @@ RectTransform:
   m_GameObject: {fileID: 78497535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 592413269}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 59.6, y: 0}
-  m_SizeDelta: {x: 600, y: 20}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78497538
 MonoBehaviour:
@@ -555,6 +555,8 @@ GameObject:
   - component: {fileID: 592413272}
   - component: {fileID: 592413271}
   - component: {fileID: 592413270}
+  - component: {fileID: 592413275}
+  - component: {fileID: 592413274}
   m_Layer: 5
   m_Name: compass_bar
   m_TagString: Untagged
@@ -570,8 +572,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592413268}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -293.727}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 78497536}
@@ -579,8 +581,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 20}
+  m_AnchoredPosition: {x: 1.29, y: 0.428}
+  m_SizeDelta: {x: 10, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &592413270
 MonoBehaviour:
@@ -649,6 +651,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592413268}
   m_CullTransparentMesh: 1
+--- !u!114 &592413274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592413268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07606d041cd57684c85e7122ad8e3897, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateLinkedTransform: 0
+  moveLerpTime: 0.1
+  rotateLerpTime: 0.1
+  scaleLerpTime: 0
+  maintainScaleOnInitialization: 1
+  smoothing: 1
+  lifetime: 0
+  orientationType: 5
+  faceTrackedObjectWhileClamped: 1
+  faceUserDefinedTargetTransform: 0
+  targetToFace: {fileID: 0}
+  pivotAxis: 7
+  minDistance: 0.3
+  maxDistance: 0.9
+  defaultDistance: 0.7
+  maxViewHorizontalDegrees: 30
+  maxViewVerticalDegrees: 20
+  reorientWhenOutsideParameters: 0
+  orientToControllerDeadZoneDegrees: 60
+  ignoreAngleClamp: 0
+  ignoreDistanceClamp: 0
+  ignoreReferencePitchAndRoll: 0
+  pitchOffset: 0
+  verticalMaxDistance: 0
+  angularClampMode: 0
+  tetherAngleSteps: 6
+  boundsScaler: 1
+--- !u!114 &592413275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592413268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3986155c7a728454f8bbbabd2e274601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftInteractor: {fileID: 0}
+  rightInteractor: {fileID: 0}
+  trackedTargetType: 0
+  trackedHandedness: 3
+  trackedHandJoint: 0
+  transformOverride: {fileID: 0}
+  additionalOffset: {x: 0, y: 0, z: 0}
+  additionalRotation: {x: 0, y: 0, z: 0}
+  updateSolvers: 1
 --- !u!4 &686284424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3803138269138945668, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
@@ -1877,7 +1939,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2351505566771328526, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2056532024}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d7e2f87fefe0ba468719b15288b46e7, type: 3}
 --- !u!1 &1847205566
@@ -2008,19 +2073,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056532023}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
+  m_LocalScale: {x: 0.3391191, y: 0.3391191, z: 0.3391191}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 592413269}
-  m_Father: {fileID: 2086301976}
+  m_Father: {fileID: 42104860}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_SizeDelta: {x: 765, y: 340.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2056532025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2060,7 +2125,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2056532027
 Canvas:
   m_ObjectHideFlags: 0
@@ -2070,7 +2135,7 @@ Canvas:
   m_GameObject: {fileID: 2056532023}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 2
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -6301,9 +6366,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4247352706133319610, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
       insertIndex: -1
       addedObject: {fileID: 316124795}
-    - targetCorrespondingSourceObject: {fileID: 4247352706133319610, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2056532024}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
 --- !u!1001 &8278588611644772751
