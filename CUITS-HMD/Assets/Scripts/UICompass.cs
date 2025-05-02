@@ -11,7 +11,10 @@ public class UICompass : MonoBehaviour
     {
         Vector3 forwardVector = Vector3.ProjectOnPlane(viewDirection.forward, Vector3.up).normalized;
         float forwardSignedAngle = Vector3.SignedAngle(forwardVector, Vector3.forward, Vector3.up);
-        float compassOffset = (forwardSignedAngle / 180f) * compassSize;
-        compassElement.anchoredPosition = new Vector3(compassOffset, 0);
+        float compassOffset = (forwardSignedAngle / 360f) * compassSize;
+        float wrappedOffset = Mathf.Repeat(compassOffset + (compassSize / 2f), compassSize) - (compassSize / 2f);
+        compassElement.anchoredPosition = new Vector3(wrappedOffset, 0);
+        //compassElement.anchoredPosition = new Vector3(compassOffset, 0);
+
     }
 }
