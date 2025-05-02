@@ -163,7 +163,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 10}
+  m_SizeDelta: {x: 540, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78497538
 MonoBehaviour:
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 661132c4fa5424e68ae6a90768d5f36c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2d6ac11a22cd9b641a227a5110d60b0d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -583,7 +583,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 1.29, y: 0.428}
-  m_SizeDelta: {x: 10, y: 1}
+  m_SizeDelta: {x: 15, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &592413270
 MonoBehaviour:
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewDirection: {fileID: 42104860}
   compassElement: {fileID: 78497536}
-  compassSize: 600
+  compassSize: 60
 --- !u!114 &592413271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,7 +2097,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 765, y: 340.5}
+  m_SizeDelta: {x: 360, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2056532025
 MonoBehaviour:
