@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class CompassBar : MonoBehaviour
 {
+
+    public Vector3 waypointPos;
+
     public RectTransform compassImage;   // Assign your wide compass bar image
     public float compassWidth = 0.7f;    // Width of your compass image
     public float maxHeading = 360f;       // Degrees in a full circle
@@ -63,6 +66,8 @@ public class CompassBar : MonoBehaviour
         //     TSS.setHasNewDataFalse();
         //     print("Time: " + time);
         // }
+
+        
     }
 
     private void UpdateCompass()
@@ -73,6 +78,12 @@ public class CompassBar : MonoBehaviour
         //print("Norm Heading: " + normalizedHeading);
 
         compassImage.anchoredPosition = new Vector2(-xOffset, compassImage.anchoredPosition.y);
+
+        myPos = new Vector3(x, y, 0);
+        Vector3 direction = waypointPos - myPos;
+        Vector3 upwards = Vector3.forward;
+        Quaternion rotation = Quaternion.LookRotation(direction, upwards);
+        print("heading of waypoint: " + rotation);
     }
 }
 
