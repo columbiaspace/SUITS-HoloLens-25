@@ -24,7 +24,6 @@ public class displayWaypoints : MonoBehaviour
 
     async Task Update()
     {
-        targetPos = target.position;
         //targetPos = new Vector3(target.position.x, 0, target.position.);
 
         // Send command for x position and wait for response

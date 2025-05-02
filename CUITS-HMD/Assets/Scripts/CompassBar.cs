@@ -77,9 +77,9 @@ public class CompassBar : MonoBehaviour
 
         //print("Norm Heading: " + normalizedHeading);
 
-        compassImage.anchoredPosition = new Vector2(-xOffset, compassImage.anchoredPosition.y);
+        //compassImage.anchoredPosition = new Vector2(-xOffset, compassImage.anchoredPosition.y);
 
-        myPos = new Vector3(x, y, 0);
+        Vector3 myPos = new Vector3(x, y, 0);
         Vector3 direction = waypointPos - myPos;
         Vector3 upwards = Vector3.forward;
         Quaternion rotation = Quaternion.LookRotation(direction, upwards);

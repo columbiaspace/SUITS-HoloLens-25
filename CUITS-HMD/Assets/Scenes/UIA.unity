@@ -553,6 +553,8 @@ GameObject:
   - component: {fileID: 592413269}
   - component: {fileID: 592413273}
   - component: {fileID: 592413272}
+  - component: {fileID: 592413278}
+  - component: {fileID: 592413277}
   - component: {fileID: 592413271}
   - component: {fileID: 592413270}
   - component: {fileID: 592413275}
@@ -599,7 +601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   viewDirection: {fileID: 42104860}
   compassElement: {fileID: 78497536}
-  compassSize: 60
+  compassSize: 65.5
 --- !u!114 &592413271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,6 +726,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3d8ef5416c34c4a9f3920c7a0b88de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypointPos: {x: 0, y: 0, z: 0}
+  myPos: {x: 0, y: 0, z: 0}
+--- !u!114 &592413277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592413268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843705fd155264033a40b8017c2e6cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tssIPAddress: 127.0.0.1
+  tssPort: 14141
+  localPort: 14142
+--- !u!114 &592413278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592413268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c04d7ad6eba43eea8c6906174b1271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypointPos: {x: 0, y: 0, z: 0}
+  compassImage: {fileID: 78497536}
+  compassWidth: 0.7
+  maxHeading: 360
+  TSS: {fileID: 592413277}
+  fetchInterval: 1
 --- !u!4 &686284424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3803138269138945668, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
@@ -1545,6 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c04d7ad6eba43eea8c6906174b1271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypointPos: {x: 0, y: 0, z: 0}
   compassImage: {fileID: 1380483231}
   compassWidth: 4
   maxHeading: 360
