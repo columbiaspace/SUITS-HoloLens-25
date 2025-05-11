@@ -162,7 +162,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 9.097221, y: 0}
   m_SizeDelta: {x: 540, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &78497538
@@ -215,6 +215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map
       objectReference: {fileID: 0}
+    - target: {fileID: 186186641061930317, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3803138269138945668, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -262,19 +266,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5529817382006583780, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4829977599925611159, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8371591621466399947, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 4782216721449248852, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
 --- !u!1 &308768765
 GameObject:
@@ -594,7 +586,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592413268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b7d3258bdad842039ec4ac9a3f7c281, type: 3}
   m_Name: 
@@ -755,12 +747,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c04d7ad6eba43eea8c6906174b1271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypointPos: {x: 0, y: 0, z: 0}
+  waypointPos: {x: 100, y: 100, z: 0}
   compassImage: {fileID: 78497536}
-  compassWidth: 0.7
+  compassWidth: 65.5
   maxHeading: 360
   TSS: {fileID: 592413277}
-  fetchInterval: 1
+  headingFetchInterval: 1
+  positionFetchInterval: 2
 --- !u!4 &686284424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3803138269138945668, guid: 6ab1d1d482430440387508adddeaadb5, type: 3}
@@ -1587,7 +1580,8 @@ MonoBehaviour:
   compassWidth: 4
   maxHeading: 360
   TSS: {fileID: 1380483235}
-  fetchInterval: 1
+  headingFetchInterval: 1
+  positionFetchInterval: 2
 --- !u!114 &1380483235
 MonoBehaviour:
   m_ObjectHideFlags: 0

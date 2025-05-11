@@ -15,6 +15,5 @@ public class UICompass : MonoBehaviour
         float wrappedOffset = Mathf.Repeat(compassOffset + (compassSize / 2f), compassSize) - (compassSize / 2f);
         compassElement.anchoredPosition = new Vector3(wrappedOffset, 0);
         //compassElement.anchoredPosition = new Vector3(compassOffset, 0);
-
     }
 }

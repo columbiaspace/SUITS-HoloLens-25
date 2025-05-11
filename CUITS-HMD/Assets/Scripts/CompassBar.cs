@@ -9,7 +9,8 @@ public class CompassBar : MonoBehaviour
     public Vector3 waypointPos;
 
     public RectTransform compassImage;   // Assign your wide compass bar image
-    public float compassWidth = 0.7f;    // Width of your compass image
+
+    public float compassWidth;    // Width of your compass image
     public float maxHeading = 360f;       // Degrees in a full circle
 
     private float heading;                // Latest heading from server
@@ -17,48 +18,77 @@ public class CompassBar : MonoBehaviour
 
     public TSSCommunicator TSS;                 // Your communication manager (TSS)
 
-    private float fetchTimer = 0f;
-    public float fetchInterval = 1.0f; // fetch every 1 second
+    //private float fetchTimer = 0f;
+    //public float fetchInterval = 1.0f; // fetch every 1 second
+    private float headingFetchTimer = 0f;
+    private float positionFetchTimer = 0f;
+    public float headingFetchInterval = 1.0f;
+    public float positionFetchInterval = 2.0f;  // Position can update less frequently
 
-    private async void Update()
+    private async void LateUpdate()
     {
-        fetchTimer += Time.deltaTime;
-        if (fetchTimer >= fetchInterval)
+        headingFetchTimer += Time.deltaTime;
+        positionFetchTimer += Time.deltaTime;
+
+        if (headingFetchTimer >= headingFetchInterval)
         {
-            fetchTimer = 0f;
-            await UpdateFromServer();
+            headingFetchTimer = 0f;
+            await UpdateHeading();
+        }
+
+        if (positionFetchTimer >= positionFetchInterval)
+        {
+            positionFetchTimer = 0f;
+            await UpdatePosition();
         }
 
         UpdateCompass();
     }
 
-    private async Task UpdateFromServer()
+    private async Task UpdateHeading()
     {
-        // Send command for X position
-        await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 17, 0);
-        if (TSS.HasNewData && TSS.LastCommandNumber == 17)
+        try
         {
-            x = TSS.LastOutputData;
-            TSS.setHasNewDataFalse();
+            //print("Fetching Heading");
+            await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 19, 0);
+            if (TSS.HasNewData && TSS.LastCommandNumber == 19)
+            {
+                heading = TSS.LastOutputData;
+                TSS.setHasNewDataFalse();
+                print("Received Heading: " + heading);
+            }
         }
-
-        // Send command for Y position
-        await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 18, 0);
-        if (TSS.HasNewData && TSS.LastCommandNumber == 18)
+        catch (Exception e)
         {
-            y = TSS.LastOutputData;
-            TSS.setHasNewDataFalse();
+            Debug.LogError("Error updating heading: " + e.Message);
         }
+    }
 
-        // Send command for Heading
-        await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 19, 0);
-        if (TSS.HasNewData && TSS.LastCommandNumber == 19)
+    private async Task UpdatePosition()
+    {
+        try
         {
-            heading = TSS.LastOutputData;  // heading in degrees (0-360)
-            TSS.setHasNewDataFalse();
-            print("Received Heading: " + heading);
-        }
+            // Send command for X position
+            await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 17, 0);
+            if (TSS.HasNewData && TSS.LastCommandNumber == 17)
+            {
+                x = TSS.LastOutputData;
+                TSS.setHasNewDataFalse();
+            }
 
+            // Send command for Y position
+            await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 18, 0);
+            if (TSS.HasNewData && TSS.LastCommandNumber == 18)
+            {
+                y = TSS.LastOutputData;
+                TSS.setHasNewDataFalse();
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error updating position: " + e.Message);
+        }
+    }
         // await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 58, 0);
         // if (TSS.HasNewData && TSS.LastCommandNumber == 58)
         // {
@@ -68,22 +98,36 @@ public class CompassBar : MonoBehaviour
         // }
 
         
-    }
 
     private void UpdateCompass()
     {
-        float normalizedHeading = heading / maxHeading;  // Normalize between 0 and 1
-        float xOffset = normalizedHeading * compassWidth;
+        // float normalizedHeading = heading / maxHeading;  // Normalize between 0 and 1
+        // float xOffset = normalizedHeading * compassWidth;
+
+        float compassOffset = (heading / 360f) * compassWidth;
+        //print("heading: " + heading + ", offset:" + compassOffset);
+        float wrappedOffset = Mathf.Repeat(compassOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
+        compassImage.anchoredPosition = new Vector3(wrappedOffset, 0);
 
         //print("Norm Heading: " + normalizedHeading);
 
         //compassImage.anchoredPosition = new Vector2(-xOffset, compassImage.anchoredPosition.y);
 
         Vector3 myPos = new Vector3(x, y, 0);
-        Vector3 direction = waypointPos - myPos;
-        Vector3 upwards = Vector3.forward;
-        Quaternion rotation = Quaternion.LookRotation(direction, upwards);
-        print("heading of waypoint: " + rotation);
+        Vector3 directionToWaypoint = waypointPos - myPos;
+
+        float waypointAngle = Vector3.SignedAngle(Vector3.up, directionToWaypoint, Vector3.forward);
+        
+        // Convert to 0-360 range
+        if (waypointAngle < 0)
+        {
+            waypointAngle += 360f;
+        }
+        
+        print("Heading to waypoint: " + waypointAngle + " degrees");
+        // Vector3 upwards = Vector3.forward;
+        // Quaternion rotation = Quaternion.LookRotation(direction, upwards);
+        // print("heading of waypoint: " + rotation);
     }
 }
 
