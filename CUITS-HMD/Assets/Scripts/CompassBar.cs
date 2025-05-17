@@ -9,6 +9,7 @@ public class CompassBar : MonoBehaviour
     public Vector3 waypointPos;
 
     public RectTransform compassImage;   // Assign your wide compass bar image
+    public RectTransform waypointMarker; // Assign your waypoint marker image
 
     public float compassWidth;    // Width of your compass image
     public float maxHeading = 360f;       // Degrees in a full circle
@@ -115,16 +116,21 @@ public class CompassBar : MonoBehaviour
 
         Vector3 myPos = new Vector3(x, y, 0);
         Vector3 directionToWaypoint = waypointPos - myPos;
+        float waypointAngle = Vector3.SignedAngle(directionToWaypoint, Vector3.up, Vector3.forward);
 
-        float waypointAngle = Vector3.SignedAngle(Vector3.up, directionToWaypoint, Vector3.forward);
-        
         // Convert to 0-360 range
         if (waypointAngle < 0)
         {
             waypointAngle += 360f;
         }
+
+
+        // Calculate waypoint marker position
+        float waypointOffset = ((360-waypointAngle) / 360f) * compassWidth;
+        float wrappedWaypointOffset = Mathf.Repeat(waypointOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
+        waypointMarker.anchoredPosition = new Vector3(wrappedWaypointOffset, 0);
         
-        print("Heading to waypoint: " + waypointAngle + " degrees");
+        //print("Heading to waypoint: " + waypointAngle + " degrees");
         // Vector3 upwards = Vector3.forward;
         // Quaternion rotation = Quaternion.LookRotation(direction, upwards);
         // print("heading of waypoint: " + rotation);
