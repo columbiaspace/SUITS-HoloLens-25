@@ -4,7 +4,6 @@ using TMPro;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.Networking;
-using TMPro;
 
 public class EvaTime : MonoBehaviour
 {
