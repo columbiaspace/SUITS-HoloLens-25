@@ -7,6 +7,8 @@ public class CompassBar : MonoBehaviour
 {
 
     public Vector3 waypointPos;
+    public Transform viewDirection;
+
 
     public RectTransform compassImage;   // Assign your wide compass bar image
     public RectTransform waypointMarker; // Assign your waypoint marker image
@@ -25,6 +27,8 @@ public class CompassBar : MonoBehaviour
     private float positionFetchTimer = 0f;
     public float headingFetchInterval = 1.0f;
     public float positionFetchInterval = 2.0f;  // Position can update less frequently
+
+    private float correctionOffsetAngle = 0f;
 
     private void Start(){
         x=0;
@@ -96,30 +100,19 @@ public class CompassBar : MonoBehaviour
             Debug.LogError("Error updating position: " + e.Message);
         }
     }
-        // await TSS.SendCommand((uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(), 58, 0);
-        // if (TSS.HasNewData && TSS.LastCommandNumber == 58)
-        // {
-        //     float time = TSS.LastOutputData;  // heading in degrees (0-360)
-        //     TSS.setHasNewDataFalse();
-        //     print("Time: " + time);
-        // }
-
-        
 
     private void UpdateCompass()
     {
-        // float normalizedHeading = heading / maxHeading;  // Normalize between 0 and 1
-        // float xOffset = normalizedHeading * compassWidth;
+        //Vector3 forwardVector = Vector3.ProjectOnPlane(viewDirection.forward, Vector3.up).normalized;
+        //float forwardSignedAngle = Vector3.SignedAngle(forwardVector, Vector3.forward, Vector3.up);
 
+        //scroll compass bar using only TSS data
         float compassOffset = ((360-heading) / 360f) * compassWidth; //using 360-heading to flip direction; 90 degrees from north is east instead of west
-        //print("heading: " + heading + ", offset:" + compassOffset);
         float wrappedOffset = Mathf.Repeat(compassOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
         compassImage.anchoredPosition = new Vector3(wrappedOffset, 0);
 
-        //print("Norm Heading: " + normalizedHeading);
 
-        //compassImage.anchoredPosition = new Vector2(-xOffset, compassImage.anchoredPosition.y);
-
+        //calculate angle to waypoint
         Vector3 myPos = new Vector3(x, y, 0);
         Vector3 directionToWaypoint = waypointPos - myPos;
         float waypointAngle = Vector3.SignedAngle(directionToWaypoint, Vector3.up, Vector3.forward);
@@ -130,54 +123,10 @@ public class CompassBar : MonoBehaviour
             waypointAngle += 360f;
         }
 
-
-
+        // adjust waypoint marker
         float relativeWaypointAngle = (heading- waypointAngle) % 360;
-        // Calculate waypoint marker position using relative angle
         float waypointOffset = ((360-relativeWaypointAngle) / 360f) * compassWidth;
-        //float waypointOffset = ((360-waypointAngle) / 360f) * compassWidth;
         float wrappedWaypointOffset = Mathf.Repeat(waypointOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
         waypointMarker.anchoredPosition = new Vector3(wrappedWaypointOffset, 0);
-        //print("waypointAngle: " + waypointAngle + ", relativeAngle: " + relativeWaypointAngle + ", offset:" + waypointOffset);  
-
-        //print($"Marker Position - Angle: {relativeWaypointAngle}, Offset: {waypointOffset}, Wrapped: {wrappedWaypointOffset}");
-        //print($"Current Position - X: {x}, Y: {y}");
-
-        
-        //print("Heading to waypoint: " + waypointAngle + " degrees");
-        // Vector3 upwards = Vector3.forward;
-        // Quaternion rotation = Quaternion.LookRotation(direction, upwards);
-        // print("heading of waypoint: " + rotation);
     }
 }
-
-
-// using System.Collections.Generic;
-// using UnityEngine;
-// using UnityEngine.UI;
-
-// public class CompassBar : MonoBehaviour
-// {
-//     public RectTransform compassBarTransform;
-//     public RectTransform objectiveMarkerTransform;
-//     public RectTransform northMarkerTransform;
-//     public RectTransform southMarkerTransform;
-//     public Transform cameraObjectTransform;
-//     public Transform objectiveObjectTransform;
-
-//     void Update()
-//     {
-//         SetMarkerPosition(objectiveMarkerTransform, objectiveObjectTransform.position);
-//         SetMarkerPosition(northMarkerTransform, cameraObjectTransform.position + Vector3.forward * 1000);
-//         SetMarkerPosition(southMarkerTransform, cameraObjectTransform.position + Vector3.back * 1000);
-//     }
-
-//     private void SetMarkerPosition(RectTransform markerTransform, Vector3 worldPosition)
-//     {
-//         Vector3 directionToTarget = worldPosition - cameraObjectTransform.position;
-//         float signedAngle = Vector3.SignedAngle(new Vector3(cameraObjectTransform.forward.x, 0, cameraObjectTransform.forward.z), new Vector3(directionToTarget.x, 0, directionToTarget.z), Vector3.up);
-
-//         float compassPosition = Mathf.Clamp(signedAngle / Camera.main.fieldOfView, -0.5f, 0.5f);
-//         markerTransform.anchoredPosition = new Vector2(compassBarTransform.rect.width * compassPosition, 0);
-//     }
-// }
