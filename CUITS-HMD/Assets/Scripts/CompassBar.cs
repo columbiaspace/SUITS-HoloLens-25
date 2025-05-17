@@ -104,7 +104,7 @@ public class CompassBar : MonoBehaviour
         // float normalizedHeading = heading / maxHeading;  // Normalize between 0 and 1
         // float xOffset = normalizedHeading * compassWidth;
 
-        float compassOffset = (heading / 360f) * compassWidth;
+        float compassOffset = ((360-heading) / 360f) * compassWidth; //using 360-heading to flip direction; 90 degrees from north is east instead of west
         //print("heading: " + heading + ", offset:" + compassOffset);
         float wrappedOffset = Mathf.Repeat(compassOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
         compassImage.anchoredPosition = new Vector3(wrappedOffset, 0);
