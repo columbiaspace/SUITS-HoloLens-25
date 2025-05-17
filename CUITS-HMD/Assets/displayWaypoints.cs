@@ -47,9 +47,9 @@ public class displayWaypoints : MonoBehaviour
         myPos = new Vector3(x, y, 0);
         //Debug.Log($"Position updated - x: {x}, y: {y}");
 
-        Vector3 direction = waypointPos - myPos;
-        Vector3 upwards = Vector3.forward;
-        Quaternion rotation = Quaternion.LookRotation(direction, upwards);
-        print(rotation);
+        // Vector3 direction = waypointPos - myPos;
+        // Vector3 upwards = Vector3.forward;
+        // Quaternion rotation = Quaternion.LookRotation(direction, upwards);
+        // print(rotation);
     }
 }

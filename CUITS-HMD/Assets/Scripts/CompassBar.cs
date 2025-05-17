@@ -26,6 +26,12 @@ public class CompassBar : MonoBehaviour
     public float headingFetchInterval = 1.0f;
     public float positionFetchInterval = 2.0f;  // Position can update less frequently
 
+    private void Start(){
+        x=0;
+        y=0;
+        heading = 0;
+    }
+
     private async void LateUpdate()
     {
         headingFetchTimer += Time.deltaTime;
@@ -56,7 +62,7 @@ public class CompassBar : MonoBehaviour
             {
                 heading = TSS.LastOutputData;
                 TSS.setHasNewDataFalse();
-                print("Received Heading: " + heading);
+                //print("Received Heading: " + heading);
             }
         }
         catch (Exception e)
@@ -125,10 +131,18 @@ public class CompassBar : MonoBehaviour
         }
 
 
-        // Calculate waypoint marker position
-        float waypointOffset = ((360-waypointAngle) / 360f) * compassWidth;
+
+        float relativeWaypointAngle = (heading- waypointAngle) % 360;
+        // Calculate waypoint marker position using relative angle
+        float waypointOffset = ((360-relativeWaypointAngle) / 360f) * compassWidth;
+        //float waypointOffset = ((360-waypointAngle) / 360f) * compassWidth;
         float wrappedWaypointOffset = Mathf.Repeat(waypointOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
         waypointMarker.anchoredPosition = new Vector3(wrappedWaypointOffset, 0);
+        //print("waypointAngle: " + waypointAngle + ", relativeAngle: " + relativeWaypointAngle + ", offset:" + waypointOffset);  
+
+        //print($"Marker Position - Angle: {relativeWaypointAngle}, Offset: {waypointOffset}, Wrapped: {wrappedWaypointOffset}");
+        //print($"Current Position - X: {x}, Y: {y}");
+
         
         //print("Heading to waypoint: " + waypointAngle + " degrees");
         // Vector3 upwards = Vector3.forward;
