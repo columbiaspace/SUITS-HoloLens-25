@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CompassBar : MonoBehaviour
 {
@@ -16,8 +17,8 @@ public class CompassBar : MonoBehaviour
     public RectTransform waypointMarker; // Assign your waypoint marker image
     public RectTransform destinationMarker; 
 
-    public Text waypointDistanceText;
-    public Text destinationDistanceText;
+    public TextMeshProUGUI waypointDistanceText;
+    public TextMeshProUGUI destinationDistanceText;
 
     public float compassWidth;    // Width of your compass image
     public float maxHeading = 360f;       // Degrees in a full circle
