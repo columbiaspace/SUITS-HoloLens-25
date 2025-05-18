@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 344256529}
   m_Layer: 0
-  m_Name: loadingScreenObj
+  m_Name: LoadingScreenObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 475635769}
   - component: {fileID: 475635768}
   m_Layer: 0
-  m_Name: loadingScreen
+  m_Name: LoadingScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5635,9 +5635,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2329932114245018515, guid: 85da546a059614284af8de4a818dea49, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2936081654825860886, guid: 85da546a059614284af8de4a818dea49, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3031184619837507483, guid: 85da546a059614284af8de4a818dea49, type: 3}
       propertyPath: m_Name
@@ -5645,7 +5649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451565098987597182, guid: 85da546a059614284af8de4a818dea49, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6361665464446640683, guid: 85da546a059614284af8de4a818dea49, type: 3}
       propertyPath: m_LocalPosition.x

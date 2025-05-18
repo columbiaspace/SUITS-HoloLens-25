@@ -21,7 +21,7 @@ public class UIManager : MonoBehaviour
         MainMenuObj.SetActive(false);
         AnalysisScreenObj.SetActive(false);
         ViewDatabaseObj.SetActive(false);
-        LoadingScreenObj.SetActive(true);
+        LoadingScreenObj.SetActive(false);
     }
 
     public void showMainScreen(){
@@ -43,11 +43,6 @@ public class UIManager : MonoBehaviour
         hideAllScreens();
         LoadingScreenObj.SetActive(true);
     }
-
-    // public void showViewDatabaseScreen(){
-    //     hideAllScreens();
-    //     ViewDatabaseObj.SetActive(true);
-    // }
 
 
 }
