@@ -7,9 +7,10 @@ public class MapLine : MonoBehaviour
     public Transform pointB;               // Second point on the map
     
     [Header("Line Appearance")]
-    public Color lineColor;  // Color of the line
+    public Color lineColor;                // Color of the line
     public float lineWidth = 0.01f;        // Width of the line
     public float lineHeight = 0.001f;      // How high above the map the line should appear
+    public float yOffset = 0.05f;          // Additional Y-axis offset for the line
     
     private LineRenderer lineRenderer;
     
@@ -60,9 +61,9 @@ public class MapLine : MonoBehaviour
         Vector3 posA = pointA.position;
         Vector3 posB = pointB.position;
         
-        // Adjust height to float slightly above the map
-        posA.y += lineHeight;
-        posB.y += lineHeight;
+        // Apply both the lineHeight (for floating above surface) and yOffset for additional height
+        posA.y += lineHeight + yOffset;
+        posB.y += lineHeight + yOffset;
         
         lineRenderer.SetPosition(0, posA);
         lineRenderer.SetPosition(1, posB);

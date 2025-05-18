@@ -2667,9 +2667,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 8653979461315936008}
   pointB: {fileID: 363194873605529216}
-  lineColor: {r: 0.7921569, g: 0.12156862, b: 0.14809634, a: 1}
-  lineWidth: 0.005
+  lineColor: {r: 0.7921569, g: 0.52852714, b: 0.12156862, a: 1}
+  lineWidth: 0.002
   lineHeight: 0.01
+  yOffset: -0.002
 --- !u!1 &2650085976522254650
 GameObject:
   m_ObjectHideFlags: 0
@@ -9202,7 +9203,6 @@ Transform:
   - {fileID: 8653979461315936008}
   - {fileID: 363194873605529216}
   - {fileID: 8085107328416239185}
-  - {fileID: 3289178645460297917}
   m_Father: {fileID: 5460251742099725586}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1338394963416514628
@@ -9782,58 +9782,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bindingProfile: {fileID: 11400000, guid: c2554c7933796464c965ae0c4acf9561, type: 2}
---- !u!1 &8804405652209443282
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3289178645460297917}
-  - component: {fileID: 1463676764354058404}
-  m_Layer: 0
-  m_Name: PlayerLocationUpdater
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3289178645460297917
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8804405652209443282}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.59588, y: -0.4615202, z: 2.2676904}
-  m_LocalScale: {x: 112.65325, y: 112.65325, z: 112.65325}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3986026752643185623}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1463676764354058404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8804405652209443282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383354fc6c23f4fd69d540b5e36b1db4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backendUrl: http://localhost:8000
-  updateInterval: 0.5
-  mapObject: {fileID: 8386479094959592205}
-  pinPrefab: {fileID: 1557339313091741678}
-  pinHeight: 0.01
-  positionScaleFactor: {x: 1, y: 1}
-  positionOffset: {x: 0, y: 0}
-  rotateWithHeading: 1
 --- !u!1 &8847566188029804319
 GameObject:
   m_ObjectHideFlags: 0
@@ -11318,11 +11266,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3da6afcca417c467faf338c94a303bf9, type: 3}
---- !u!1 &1557339313091741678 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4379481361295867048, guid: 3da6afcca417c467faf338c94a303bf9, type: 3}
-  m_PrefabInstance: {fileID: 2980200714714643270}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8653979461315936008 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5855471965949477966, guid: 3da6afcca417c467faf338c94a303bf9, type: 3}
