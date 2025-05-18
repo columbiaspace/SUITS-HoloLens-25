@@ -6,12 +6,18 @@ using UnityEngine.UI;
 public class CompassBar : MonoBehaviour
 {
 
+    
+    public Vector3 destination;
     public Vector3 waypointPos;
     public Transform viewDirection;
 
 
     public RectTransform compassImage;   // Assign your wide compass bar image
     public RectTransform waypointMarker; // Assign your waypoint marker image
+    public RectTransform destinationMarker; 
+
+    public Text waypointDistanceText;
+    public Text destinationDistanceText;
 
     public float compassWidth;    // Width of your compass image
     public float maxHeading = 360f;       // Degrees in a full circle
@@ -29,6 +35,8 @@ public class CompassBar : MonoBehaviour
     public float positionFetchInterval = 2.0f;  // Position can update less frequently
 
     private float correctionOffsetAngle = 0f;
+
+    
 
     private void Start(){
         x=0;
@@ -128,5 +136,37 @@ public class CompassBar : MonoBehaviour
         float waypointOffset = ((360-relativeWaypointAngle) / 360f) * compassWidth;
         float wrappedWaypointOffset = Mathf.Repeat(waypointOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
         waypointMarker.anchoredPosition = new Vector3(wrappedWaypointOffset, 0);
+
+
+        // Calculate distance to waypoint
+        float distanceToWaypoint = directionToWaypoint.magnitude;
+        if (waypointDistanceText != null)
+        {
+            waypointDistanceText.text = $"{distanceToWaypoint:F1}m";
+        }
+
+
+
+        //calculate angle to final destination
+        Vector3 directionToDestination = destination - myPos;
+        float destinationAngle = Vector3.SignedAngle(directionToDestination, Vector3.up, Vector3.forward);
+
+        // Convert to 0-360 range
+        if (destinationAngle < 0)
+        {
+            destinationAngle += 360f;
+        }
+        // adjust final destination marker
+        float relativeDestinationAngle = (heading- destinationAngle) % 360;
+        float destinationOffset = ((360-relativeDestinationAngle) / 360f) * compassWidth;
+        float wrappedDestinationOffset = Mathf.Repeat(destinationOffset + (compassWidth / 2f), compassWidth) - (compassWidth / 2f);
+        destinationMarker.anchoredPosition = new Vector3(wrappedDestinationOffset, 0);
+
+        // Calculate distance to final destination
+        float distanceToDestination = directionToDestination.magnitude;
+        if (destinationDistanceText != null)
+        {
+            destinationDistanceText.text = $"{distanceToDestination:F1}m";
+        }
     }
 }
