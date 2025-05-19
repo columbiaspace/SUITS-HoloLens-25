@@ -19,6 +19,9 @@ public class UIManager : MonoBehaviour
     public GameObject AnalysisScreenObj;
     public GameObject ViewDatabaseObj;
     public GameObject AddNotesObj;
+    public GameObject RecordViewObj;
+    public GameObject RecordCardPrefab; // Assign RecordCard prefab
+    public Transform cardListParent; // Assign ScrollView Content area
 
     // Input fields
     public TMP_InputField OtherNotesInput;
@@ -80,6 +83,8 @@ public class UIManager : MonoBehaviour
         AnalysisScreenObj.SetActive(false);
         ViewDatabaseObj.SetActive(false);
         AddNotesObj.SetActive(false);
+        RecordViewObj.SetActive(false);
+
     }
 
     public void showMainScreen(){
@@ -122,50 +127,95 @@ public class UIManager : MonoBehaviour
         AnalysisScreenObj.SetActive(true);
     }
 
-
-
-    // public void showDatabaseScreen(){
-    //     hideAllScreens();
-    //     ViewDatabaseObj.SetActive(true);
-    // }
-
-    public void showDatabaseScreen()
-    {
+    public void showDatabaseScreen(){
         hideAllScreens();
         ViewDatabaseObj.SetActive(true);
-
-        string databaseOutput = "";
-
-        foreach (var entry in rockAnalysisDatabase)
+        // Clear old cards
+        foreach (Transform child in cardListParent)
         {
-            databaseOutput += $"Analysis ID: {entry.id}\n";
-            databaseOutput += $"Timestamp: {entry.timestamp}\n";
-            
-            // Show Chemical Composition
-            foreach (var kvp in entry.chemicalData)
-            {
-                databaseOutput += $"{kvp.Key}: {kvp.Value}\n";
-            }
-
-            // Show Astronaut Notes
-            databaseOutput += $"Color: {entry.color}\n";
-            databaseOutput += $"Size: {entry.size}\n";
-            databaseOutput += $"Texture: {entry.texture}\n";
-            databaseOutput += $"Other Notes: {entry.otherNotes}\n";
-            
-            databaseOutput += "\n";
+            Destroy(child.gameObject);
         }
 
+        for (int i = 0; i < rockAnalysisDatabase.Count; i++)
+        {
+            var entry = rockAnalysisDatabase[i];
+            GameObject card = Instantiate(RecordCardPrefab, cardListParent);
 
-        if (databaseOutputText != null)
-        {
-            databaseOutputText.text = databaseOutput;
-        }
-        else
-        {
-            Debug.LogWarning("databaseOutputText is NULL!");
+            // Set the size manually
+            RectTransform rect = card.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(800f, 300f); // 👈 Adjust width/height here
+
+            TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
+            timestampText.text = entry.timestamp;
+            timestampText.fontSize = 36f; // Set font size here
+
+            int index = i; // local copy for lambda
+            card.GetComponent<Button>().onClick.AddListener(() => ShowRecordDetails(index));
+
         }
     }
+
+    public void ShowRecordDetails(int index)
+    {
+        hideAllScreens();
+        RecordViewObj.SetActive(true);
+
+        if (index < 0 || index >= rockAnalysisDatabase.Count)
+        {
+            Debug.LogWarning("Invalid record index.");
+            return;
+        }
+        var entry = rockAnalysisDatabase[index];
+        string output = $"Analysis ID: {entry.id}\n";
+        output += $"Timestamp: {entry.timestamp}\n\n";
+
+        foreach (var kvp in entry.chemicalData)
+        {
+            output += $"{kvp.Key}: {kvp.Value}\n";
+        }
+
+        output += $"\nColor: {entry.color}\nSize: {entry.size}\nTexture: {entry.texture}\nOther Notes: {entry.otherNotes}";
+
+        databaseOutputText.text = output;
+    }
+
+
+    // public void showDatabaseRecord()
+    // {
+    //     hideAllScreens();
+    //     RecordViewObj.SetActive(true);
+
+    //     string databaseOutput = "";
+
+    //     foreach (var entry in rockAnalysisDatabase)
+    //     {
+    //         databaseOutput += $"Analysis ID: {entry.id}\n";
+    //         databaseOutput += $"Timestamp: {entry.timestamp}\n";
+            
+    //         // Show Chemical Composition
+    //         foreach (var kvp in entry.chemicalData)
+    //         {
+    //             databaseOutput += $"{kvp.Key}: {kvp.Value}\n";
+    //         }
+
+    //         // Show Astronaut Notes
+    //         databaseOutput += $"Color: {entry.color}\n";
+    //         databaseOutput += $"Size: {entry.size}\n";
+    //         databaseOutput += $"Texture: {entry.texture}\n";
+    //         databaseOutput += $"Other Notes: {entry.otherNotes}\n";
+            
+    //         databaseOutput += "\n";
+    //     }
+
+    //     if (databaseOutputText != null)
+    //     {
+    //         databaseOutputText.text = databaseOutput;
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("databaseOutputText is NULL!");
+    //     }
+    // }
 
     public void showRockAnalysisScreen()
     {
@@ -191,7 +241,7 @@ public class UIManager : MonoBehaviour
 
         Debug.Log("Finished fetching data from server.");
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.0f);
 
         // Build output string
         string output = "EVA1 chemical composition:\n";

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class RockAnalyzer : MonoBehaviour
 {
-    private const string SERVER_IP = "10.207.8.105";
+    private const string SERVER_IP = "127.0.0.1";
     private const int SERVER_PORT = 14141;
 
     private const int POST_COMMAND = 1103;
@@ -81,13 +81,13 @@ public class RockAnalyzer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"⚠️ Incomplete response for command {commandId}");
+                    Debug.LogWarning($"Incomplete response for command {commandId}");
                     return null;
                 }
             }
             catch (SocketException)
             {
-                Debug.LogWarning($"⚠️ No response for command {commandId}");
+                Debug.LogWarning($" No response for command {commandId}");
                 return null;
             }
         }
