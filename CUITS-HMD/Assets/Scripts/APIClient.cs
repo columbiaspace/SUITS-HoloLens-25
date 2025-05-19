@@ -16,22 +16,26 @@ public class APIClient : MonoBehaviour
 
     IEnumerator GetDataFromServer()
     {
-        string url = "http://127.0.0.1:8000/eva1/imu";
-        UnityWebRequest request = UnityWebRequest.Get(url); // Create a GET request to the FastAPI endpoint
-        yield return request.SendWebRequest(); // Tells Unity to wait for the request to complete
-
-        if (request.result == UnityWebRequest.Result.Success) // Check if the request was successful
+        while (true)
         {
-            string json = request.downloadHandler.text; // Get the raw JSON string returned by FastAPI
-            PositionResponse data = JsonUtility.FromJson<PositionResponse>(json); // Turns that JSON into a C# object
+            string url = "http://192.168.51.110:8000/eva1/imu";
+            UnityWebRequest request = UnityWebRequest.Get(url);
+            yield return request.SendWebRequest();
 
-            // Convert API data to Vector3 and update the positions array in DropPin
-            dropPin.SetPositions(new Vector3[] { data.ToVector3() });
-            textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
-        }
-        else
-        {
-            Debug.LogError("API Error: " + request.error); // If the request fails, log the error in console
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string json = request.downloadHandler.text;
+                PositionResponse data = JsonUtility.FromJson<PositionResponse>(json);
+
+                dropPin.SetPosition(data.ToVector3());
+                textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
+            }
+            else
+            {
+                Debug.LogError("API Error: " + request.error);
+            }
+
+            yield return new WaitForSeconds(0.1f); // Adjust this delay as needed
         }
     }
 }
