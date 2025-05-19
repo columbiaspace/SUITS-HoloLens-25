@@ -26,7 +26,7 @@ public class APIClient : MonoBehaviour
             PositionResponse data = JsonUtility.FromJson<PositionResponse>(json); // Turns that JSON into a C# object
 
             // Convert API data to Vector3 and update the positions array in DropPin
-            dropPin.SetPositions(new Vector3[] { data.ToVector3() });
+            // dropPin.SetPositions(new Vector3[] { data.ToVector3() });
             textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
         }
         else
