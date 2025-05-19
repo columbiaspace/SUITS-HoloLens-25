@@ -10,6 +10,9 @@ public class APIClient : MonoBehaviour
     public TextMeshProUGUI textDisplay;
     public static Vector3 LatestPosition;
 
+    // for measuring intervals
+    private float lastFetchTime = 0f;
+
     void Start()
     {
         StartCoroutine(GetDataFromServer()); // Start the coroutine to fetch data from the server
@@ -19,12 +22,19 @@ public class APIClient : MonoBehaviour
     {
         while (true)
         {
+            float sendTime = Time.realtimeSinceStartup;
+
             string url = "http://127.0.0.1:8000/eva1/imu";
             UnityWebRequest request = UnityWebRequest.Get(url);
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
-            {
+            {   
+                // measure the moment we got a response
+                float receiveTime = Time.realtimeSinceStartup;
+                float interval = receiveTime - lastFetchTime;
+                lastFetchTime = receiveTime;
+
                 string json = request.downloadHandler.text;
                 PositionResponse data = JsonUtility.FromJson<PositionResponse>(json);
 
@@ -32,6 +42,16 @@ public class APIClient : MonoBehaviour
                 dropPin.SetPosition(pos);
                 LatestPosition = pos;
                 textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
+
+                // log interval AND values
+                Debug.Log(
+                        $"[API] Fetch #{Time.frameCount} @" +
+                        $"{receiveTime:F2}s  Δ={interval:F3}s  " +
+                        $"raw=(x:{data.posx:F2},y:{data.posy:F2},h:{data.heading:F2})  " +
+                        $"world={pos}"
+                );
+
+
             }
             else
             {
