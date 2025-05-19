@@ -758,6 +758,7 @@ GameObject:
   - component: {fileID: 592413269}
   - component: {fileID: 592413273}
   - component: {fileID: 592413272}
+  - component: {fileID: 592413279}
   - component: {fileID: 592413278}
   - component: {fileID: 592413277}
   - component: {fileID: 592413271}
@@ -957,14 +958,39 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592413268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c04d7ad6eba43eea8c6906174b1271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destination: {x: 0, y: 1, z: 0}
-  waypointPos: {x: 0, y: 1, z: 0}
+  destination: {x: 0, y: 20, z: 0}
+  waypointPos: {x: 20, y: 20, z: 0}
   viewDirection: {fileID: 0}
+  compassImage: {fileID: 78497536}
+  waypointMarker: {fileID: 1478001719}
+  destinationMarker: {fileID: 1750498881}
+  waypointDistanceText: {fileID: 803757040}
+  destinationDistanceText: {fileID: 3330059}
+  compassWidth: 65.5
+  maxHeading: 360
+  TSS: {fileID: 592413277}
+  headingFetchInterval: 1
+  positionFetchInterval: 2
+--- !u!114 &592413279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592413268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a576027c3e2d348319c79a51cf8edd81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {x: 0, y: 20, z: 0}
+  waypointPos: {x: 20, y: 20, z: 0}
+  viewDirection: {fileID: 42104860}
   compassImage: {fileID: 78497536}
   waypointMarker: {fileID: 1478001719}
   destinationMarker: {fileID: 1750498881}
