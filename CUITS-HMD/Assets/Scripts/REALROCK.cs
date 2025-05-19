@@ -34,7 +34,7 @@ public class REALROCK : MonoBehaviour
     void Update()
     {
         // If the rock id value isn't set to default
-        if (TSS.spec.spec.eva1.id != 0 ) {
+        /*if (TSS.spec.spec.eva1.id != 0 ) {
             if ( TSS.spec.spec.eva1.data.SiO2 < 10 ||  TSS.spec.spec.eva1.data.TiO2 > 1 ||  TSS.spec.spec.eva1.data.Al2O3 > 10 || 
                  TSS.spec.spec.eva1.data.FeO > 29 ||  TSS.spec.spec.eva1.data.MnO > 1 || TSS.spec.spec.eva1.data.MgO > 20 || 
                  TSS.spec.spec.eva1.data.CaO > 10 ||  TSS.spec.spec.eva1.data.K2O > 1 ||  TSS.spec.spec.eva1.data.P2O3 > 1.5) {
@@ -44,6 +44,6 @@ public class REALROCK : MonoBehaviour
             }
             // Set rock id back to default
             TSS.spec.spec.eva1.id = 0;
-        }
+        }*/
     }
 }

@@ -60,7 +60,7 @@ public class vitals2025 : MonoBehaviour
 
     IEnumerator GetDataFromServer()
     {
-        string url = "http://127.0.0.1:8000/all";
+        string url = "http://127.0.0.1:14141/all";
         UnityWebRequest request = UnityWebRequest.Get(url); // Create a GET request to the FastAPI endpoint
         yield return request.SendWebRequest(); // Tells Unity to wait for the request to complete
 
