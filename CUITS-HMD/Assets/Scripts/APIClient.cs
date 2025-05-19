@@ -8,6 +8,7 @@ public class APIClient : MonoBehaviour
 {
     public DropPin dropPin;
     public TextMeshProUGUI textDisplay;
+    public static Vector3 LatestPosition;
 
     void Start()
     {
@@ -18,7 +19,7 @@ public class APIClient : MonoBehaviour
     {
         while (true)
         {
-            string url = "http://192.168.51.110:8000/eva1/imu";
+            string url = "http://127.0.0.1:8000/eva1/imu";
             UnityWebRequest request = UnityWebRequest.Get(url);
             yield return request.SendWebRequest();
 
@@ -27,15 +28,17 @@ public class APIClient : MonoBehaviour
                 string json = request.downloadHandler.text;
                 PositionResponse data = JsonUtility.FromJson<PositionResponse>(json);
 
-                dropPin.SetPosition(data.ToVector3());
+                Vector3 pos = data.ToVector3();
+                dropPin.SetPosition(pos);
+                LatestPosition = pos;
                 textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
             }
             else
             {
                 Debug.LogError("API Error: " + request.error);
             }
-
-            yield return new WaitForSeconds(0.1f); // Adjust this delay as needed
+            //WaitForSecondsRealtime changed to this 
+            yield return new WaitForSecondsRealtime(0.1f); // Adjust this delay as needed
         }
     }
 }
