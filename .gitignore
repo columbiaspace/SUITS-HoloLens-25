@@ -49,3 +49,5 @@ packages.config
 CUITS-HMD/.vsconfig
 CUITS-HMD/Assets/HMDComponents/MinimapSystem/Textures/Minimap/MinimapRender.renderTexture
 CUITS-HMD/Assets/HMDComponents/MinimapSystem/Textures/Minimap/WorldMapRender.renderTexture
+
+CUITS-HMD-recover/
