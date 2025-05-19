@@ -58,7 +58,7 @@ public class APIClient : MonoBehaviour
                 Debug.LogError("API Error: " + request.error);
             }
             //WaitForSecondsRealtime changed to this 
-            yield return new WaitForSecondsRealtime(0.1f); // Adjust this delay as needed
+            yield return new WaitForSecondsRealtime(1f); // Adjust this delay as needed
         }
     }
 }
