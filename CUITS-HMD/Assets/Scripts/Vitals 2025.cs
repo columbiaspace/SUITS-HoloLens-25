@@ -69,7 +69,6 @@ public class vitals2025 : MonoBehaviour
             string json = request.downloadHandler.text; // Get the raw JSON string returned by FastAPI
             
             VitalsResponse data = JsonUtility.FromJson<VitalsResponse>(json); // Turns that JSON into a C# object
-            Debug.Log(data.eva1); // Log the JSON response for debugging
 
             display_batt_time_left_eva1.text = "Battery time left: " + data.eva1.telemetry.batt_time_left.ToString();
             display_oxy_pri_storage_eva1.text = "Primary oxygen storage: " + data.eva1.telemetry.oxy_pri_storage.ToString();
