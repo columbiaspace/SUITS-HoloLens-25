@@ -119,7 +119,7 @@ public class FindPath : MonoBehaviour
             yield return request.SendWebRequest();
             Debug.Log($"FindPath: Request complete with status: {request.result}");
 
-            if (request.result == UnityWebRequest.Result.Success)
+            if (request.result != UnityWebRequest.Result.Success) //temp switch up
             {
                 string jsonResponse = request.downloadHandler.text;
                 Debug.Log($"EVA Position JSON received: {jsonResponse}");
@@ -145,7 +145,7 @@ public class FindPath : MonoBehaviour
             else
             {
                 Debug.LogError($"FindPath: Error fetching EVA position: {request.error}. Using default start (0,0) for testing.");
-                startNode = new Vector2Int(1, 7);
+                startNode = new Vector2Int(12, 6);
                 ComputeAndDrawPath();
             }
 
@@ -171,6 +171,19 @@ public class FindPath : MonoBehaviour
             if (path != null && path.Count > 0)
             {
                 Debug.Log($"Path found with {path.Count} points.");
+                
+                // Log all coordinates in the path
+                Debug.Log("========== FindPath: PATH COORDINATES ==========");
+                string pathCoordinates = "";
+                foreach (Vector2Int point in path)
+                {
+                    pathCoordinates += $"({point.x}, {point.y}) → ";
+                }
+                // Remove trailing arrow from last point
+                if (pathCoordinates.Length > 3)
+                    pathCoordinates = pathCoordinates.Substring(0, pathCoordinates.Length - 3);
+                Debug.Log(pathCoordinates);
+                
                 pathDrawer.DrawPath(path);
             }
             else
@@ -221,6 +234,19 @@ public class FindPath : MonoBehaviour
                 }
             }
         }
+        
+        // Log the adjacency list for debugging
+        Debug.Log("========== FindPath: ADJACENCY LIST DETAILS ==========");
+        foreach (var node in adjList.Keys)
+        {
+            string neighbors = "";
+            foreach (var neighbor in adjList[node])
+            {
+                neighbors += neighbor.ToString() + ", ";
+            }
+            Debug.Log($"Node {node} connects to: {neighbors}");
+        }
+        
         return adjList;
     }
 
