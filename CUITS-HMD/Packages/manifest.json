@@ -11,7 +11,6 @@
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.8.0",
     "com.unity.xr.openxr": "1.8.2",
-    "jillejr.newtonsoft.json-for-unity": "https://github.com/jilleJr/Newtonsoft.Json-for-Unity.git#upm",
     "org.mixedrealitytoolkit.accessibility": "file:MixedReality/org.mixedrealitytoolkit.accessibility-1.0.1-pre.19.tgz",
     "org.mixedrealitytoolkit.audio": "file:MixedReality/org.mixedrealitytoolkit.audio-3.0.1.tgz",
     "org.mixedrealitytoolkit.core": "file:MixedReality/org.mixedrealitytoolkit.core-3.1.1.tgz",
