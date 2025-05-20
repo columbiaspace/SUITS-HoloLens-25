@@ -7,7 +7,6 @@ public class ev1_position : MonoBehaviour
     public float moveSpeed = 5f; // Adjust for smoothness
     private Vector3 initialPosition;
     private bool hasReceivedPosition = false;
-    private const float Z_POSITION = -0.35f; // Match the Z position from APIClient
 
     void Start()
     {
@@ -35,9 +34,6 @@ public class ev1_position : MonoBehaviour
 
             // Use the static LatestPosition from APIClient
             Vector3 targetPosition = APIClient.LatestPosition;
-            
-            // Ensure we maintain the correct Z position
-            targetPosition.z = Z_POSITION;
             
             // Log the positions for debugging
             Debug.Log($"[ev1_position] Current: {transform.position}, Target: {targetPosition}, Speed: {moveSpeed}");
