@@ -7,13 +7,16 @@ public class ev1_position : MonoBehaviour
     public float moveSpeed = 5f; // Adjust for smoothness
     private Vector3 initialPosition;
     private bool hasReceivedPosition = false;
+    
 
     void Start()
     {
+
         // Store the initial position when the script starts
-        initialPosition = transform.position;
+        initialPosition = transform.localPosition;
         Debug.Log($"[ev1_position] Start - Initial position: {initialPosition}");
         
+
         // Check if APIClient exists
         if (FindObjectOfType<APIClient>() == null)
         {
@@ -36,10 +39,10 @@ public class ev1_position : MonoBehaviour
             Vector3 targetPosition = APIClient.LatestPosition;
             
             // Log the positions for debugging
-            Debug.Log($"[ev1_position] Current: {transform.position}, Target: {targetPosition}, Speed: {moveSpeed}");
+            Debug.Log($"[ev1_position] Current: {transform.localPosition}, Target: {targetPosition}, Speed: {moveSpeed}");
 
             // Move the GameObject this script is attached to
-            transform.position = targetPosition;
+            transform.localPosition = targetPosition;
         }
         else
         {
