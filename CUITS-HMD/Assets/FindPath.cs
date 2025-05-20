@@ -103,7 +103,7 @@ public class FindPath : MonoBehaviour
         Debug.Log($"FindPath: Adjacency list built with {adjacencyList.Count} nodes");
         
         Debug.Log("FindPath: Starting coroutine to fetch EVA position...");
-       // StartCoroutine(FetchEvaPositionAndProcessPath());
+        //StartCoroutine(FetchEvaPositionAndProcessPath());
     }
 
     IEnumerator FetchEvaPositionAndProcessPath()
