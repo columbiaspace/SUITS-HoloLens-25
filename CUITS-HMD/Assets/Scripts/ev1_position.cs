@@ -39,7 +39,7 @@ public class ev1_position : MonoBehaviour
             Debug.Log($"[ev1_position] Current: {transform.position}, Target: {targetPosition}, Speed: {moveSpeed}");
 
             // Move the GameObject this script is attached to
-            transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            transform.position = targetPosition;
         }
         else
         {
