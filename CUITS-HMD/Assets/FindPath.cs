@@ -145,7 +145,7 @@ public class FindPath : MonoBehaviour
             else
             {
                 Debug.LogError($"FindPath: Error fetching EVA position: {request.error}. Using default start (0,0) for testing.");
-                startNode = new Vector2Int(6, 14);
+                startNode = new Vector2Int(5, 7);
                 ComputeAndDrawPath();
             }
 
