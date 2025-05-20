@@ -14,36 +14,35 @@ public class EvaTime : MonoBehaviour
     void Start()
     {
         display.text = "0:00"; // Initial display
+        StartCoroutine(GetDataFromServer()); // Start the coroutine to fetch data from the server
     }
 
     IEnumerator GetDataFromServer()
     {
-        string url = "http://127.0.0.1:8000/all";
-        UnityWebRequest request = UnityWebRequest.Get(url); // Create a GET request to the FastAPI endpoint
-        yield return request.SendWebRequest(); // Tells Unity to wait for the request to complete
+        while (true) {
+            string url = "http://127.0.0.1:8000/all";
+            UnityWebRequest request = UnityWebRequest.Get(url); // Create a GET request to the FastAPI endpoint
+            yield return request.SendWebRequest(); // Tells Unity to wait for the request to complete
 
-        if (request.result == UnityWebRequest.Result.Success) // Check if the request was successful
-        {
-            string json = request.downloadHandler.text; // Get the raw JSON string returned by FastAPI
-            TimeResponse data = JsonUtility.FromJson<TimeResponse>(json); // Turns that JSON into a C# object
+            if (request.result == UnityWebRequest.Result.Success) // Check if the request was successful
+            {
+                string json = request.downloadHandler.text; // Get the raw JSON string returned by FastAPI
+                TimeResponse data = JsonUtility.FromJson<TimeResponse>(json); // Turns that JSON into a C# object
 
-            display.text = $"{data.eva_time}"; // Update the display with the time from the API
+                display.text = $"{data.eva_time}"; // Update the display with the time from the API
 
-            // Convert API data to Vector3 and update the positions array in DropPin
-            //dropPin.SetPositions(new Vector3[] { data.ToVector3() });
-            //textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
-        }
-        else
-        {
-            Debug.LogError("API Error: " + request.error); // If the request fails, log the error in console
+                // Convert API data to Vector3 and update the positions array in DropPin
+                //dropPin.SetPositions(new Vector3[] { data.ToVector3() });
+                //textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
+            }
+            else
+            {
+                Debug.LogError("API Error: " + request.error); // If the request fails, log the error in console
+            }
+            yield return new WaitForSecondsRealtime(1f); // Adjust this delay as needed
         }
     }
 
-
-    void Update()
-    {
-        StartCoroutine(GetDataFromServer()); // Start the coroutine to fetch data from the server
-    }
 }
 
 
