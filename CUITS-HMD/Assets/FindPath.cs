@@ -119,7 +119,7 @@ public class FindPath : MonoBehaviour
             yield return request.SendWebRequest();
             Debug.Log($"FindPath: Request complete with status: {request.result}");
 
-            if (request.result != UnityWebRequest.Result.Success) //temp switch up
+            if (false) //temp switch up
             {
                 string jsonResponse = request.downloadHandler.text;
                 Debug.Log($"EVA Position JSON received: {jsonResponse}");
@@ -150,6 +150,7 @@ public class FindPath : MonoBehaviour
             }
 
         }
+        
     }
 
     void ComputeAndDrawPath()
