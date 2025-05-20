@@ -74,7 +74,8 @@ public class PositionResponse
 
     // Converts the response data into a Unity Vector3 that can be used for positioning pins
     public Vector3 ToVector3()
-    {
-        return new Vector3(0.162f * posx + 916.52f, 0.162f * posy + 1619.58f, -0.35f);
+    {   
+        //test changing to -0.5f instead of -0.35f
+        return new Vector3(0.162f * posx + 916.52f, 0.162f * posy + 1619.58f, -0.5f);
     }
 }
