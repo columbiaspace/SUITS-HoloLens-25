@@ -5,12 +5,49 @@ using UnityEngine;
 public class ev1_position : MonoBehaviour
 {
     public float moveSpeed = 5f; // Adjust for smoothness
+    private Vector3 initialPosition;
+    private bool hasReceivedPosition = false;
+    private const float Z_POSITION = -0.35f; // Match the Z position from APIClient
+
+    void Start()
+    {
+        // Store the initial position when the script starts
+        initialPosition = transform.position;
+        Debug.Log($"[ev1_position] Start - Initial position: {initialPosition}");
+        
+        // Check if APIClient exists
+        if (FindObjectOfType<APIClient>() == null)
+        {
+            Debug.LogError("[ev1_position] ERROR: No APIClient found in scene! Please add APIClient component to a GameObject.");
+        }
+    }
 
     void Update()
     {
-        Vector3 targetPosition = APIClient.LatestPosition;
+        // Check if we have a valid position from APIClient
+        if (APIClient.LatestPosition != Vector3.zero)
+        {
+            if (!hasReceivedPosition)
+            {
+                Debug.Log($"[ev1_position] First position received: {APIClient.LatestPosition}");
+                hasReceivedPosition = true;
+            }
 
-        // Move the GameObject this script is attached to
-        transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            // Use the static LatestPosition from APIClient
+            Vector3 targetPosition = APIClient.LatestPosition;
+            
+            // Ensure we maintain the correct Z position
+            targetPosition.z = Z_POSITION;
+            
+            // Log the positions for debugging
+            Debug.Log($"[ev1_position] Current: {transform.position}, Target: {targetPosition}, Speed: {moveSpeed}");
+
+            // Move the GameObject this script is attached to
+            transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            Debug.LogWarning("[ev1_position] Waiting for valid position from APIClient...");
+        }
     }
 }
