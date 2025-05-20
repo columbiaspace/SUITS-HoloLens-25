@@ -50,7 +50,7 @@ public class APIClient : MonoBehaviour
                         $"[API] Fetch #{Time.frameCount} @" +
                         $"{receiveTime:F2}s  Δ={interval:F3}s  " +
                         $"raw=(x:{data.posx:F2},y:{data.posy:F2},h:{data.heading:F2})  " +
-                        $"world={pos}"
+                        $"world={pos1}"
                 );
 
 

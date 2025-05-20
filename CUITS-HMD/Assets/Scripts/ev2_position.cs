@@ -38,7 +38,7 @@ public class ev2_position : MonoBehaviour
             Vector3 targetPosition = APIClient.LatestPosition2;
             
             // Log the positions for debugging
-            Debug.Log($"[ev2_position] Current: {transform.localPosition}, Target: {targetPosition}, Speed: {moveSpeed}");
+            Debug.Log($"[ev2_position] Current: {transform.localPosition}, Target: {targetPosition}");
 
             // Move the GameObject this script is attached to
             transform.localPosition = targetPosition;
