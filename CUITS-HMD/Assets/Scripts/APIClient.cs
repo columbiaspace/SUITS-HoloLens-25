@@ -8,7 +8,8 @@ public class APIClient : MonoBehaviour
 {
     public DropPin dropPin;
     public TextMeshProUGUI textDisplay;
-    public static Vector3 LatestPosition;
+    public static Vector3 LatestPosition1;
+    public static Vector3 LatestPosition2;
 
     // for measuring intervals
     private float lastFetchTime = 0f;
@@ -23,9 +24,10 @@ public class APIClient : MonoBehaviour
         while (true)
         {
             float sendTime = Time.realtimeSinceStartup;
-
-            string url = "http://127.0.0.1:8000/eva1/imu";
-            UnityWebRequest request = UnityWebRequest.Get(url);
+            
+            //for ev1
+            string url1 = "http://127.0.0.1:8000/eva1/imu";
+            UnityWebRequest request = UnityWebRequest.Get(url1);
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
@@ -38,9 +40,9 @@ public class APIClient : MonoBehaviour
                 string json = request.downloadHandler.text;
                 PositionResponse data = JsonUtility.FromJson<PositionResponse>(json);
 
-                Vector3 pos = data.ToVector3();
-                dropPin.SetPosition(pos);
-                LatestPosition = pos;
+                Vector3 pos1 = data.ToVector3();
+                dropPin.SetPosition(pos1);
+                LatestPosition1 = pos1;
                 textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
 
                 // log interval AND values
@@ -49,6 +51,43 @@ public class APIClient : MonoBehaviour
                         $"{receiveTime:F2}s  Δ={interval:F3}s  " +
                         $"raw=(x:{data.posx:F2},y:{data.posy:F2},h:{data.heading:F2})  " +
                         $"world={pos}"
+                );
+
+
+            }
+            else
+            {
+                Debug.LogError("API Error: " + request.error);
+            }
+
+
+
+             //for ev2
+            string url2 = "http://127.0.0.1:8000/eva2/imu";
+            UnityWebRequest request2 = UnityWebRequest.Get(url2);
+            yield return request2.SendWebRequest();
+
+            if (request2.result == UnityWebRequest.Result.Success)
+            {   
+                // measure the moment we got a response
+                float receiveTime = Time.realtimeSinceStartup;
+                float interval = receiveTime - lastFetchTime;
+                lastFetchTime = receiveTime;
+
+                string json2 = request.downloadHandler.text;
+                PositionResponse data2 = JsonUtility.FromJson<PositionResponse>(json2);
+
+                Vector3 pos2 = data2.ToVector3();
+                dropPin.SetPosition(pos2);
+                LatestPosition2 = pos2;
+                //textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
+
+                // log interval AND values
+                Debug.Log(
+                        $"[API] Fetch #{Time.frameCount} @" +
+                        $"{receiveTime:F2}s  Δ={interval:F3}s  " +
+                        $"raw=(x:{data2.posx:F2},y:{data2.posy:F2},h:{data2.heading:F2})  " +
+                        $"world={pos2}"
                 );
 
 
