@@ -52,7 +52,7 @@ public class UIManager : MonoBehaviour
         Debug.Log(Application.persistentDataPath);
 
         LoadDatabase();
-        showMainScreen();
+        // showMainScreen();
     }
 
     private void SaveDatabase()
@@ -84,7 +84,6 @@ public class UIManager : MonoBehaviour
         ViewDatabaseObj.SetActive(false);
         AddNotesObj.SetActive(false);
         RecordViewObj.SetActive(false);
-
     }
 
     public void showMainScreen(){
@@ -148,9 +147,8 @@ public class UIManager : MonoBehaviour
             // TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
             // timestampText.text = "rock_id " + entry.id + " at " + entry.timestamp;
 
-            TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI cardText = card.GetComponentInChildren<TextMeshProUGUI>();
 
-            // ✅ Find the chemical with the highest value
             string mostAbundantChemical = "N/A";
             float maxValue = float.MinValue;
 
@@ -163,8 +161,7 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            // ✅ Set text
-            timestampText.text = $"rock_id {entry.id} at {entry.timestamp}\nMost Abundant: {mostAbundantChemical} ({maxValue})";
+            cardText.text = $"rock_id {entry.id} at {entry.timestamp}\nMost Abundant: {mostAbundantChemical} ({maxValue})";
             // timestampText.fontSize = 36f; // Set font size here
 
             int index = i; // local copy for lambda
@@ -204,11 +201,74 @@ public class UIManager : MonoBehaviour
         StartCoroutine(showAnalysisScreenCoroutine()); // <-- StartCoroutine required
     }
 
+
     public void showRockAnalysisScreenNoRun()
     {
         Debug.Log("Back to Show Analysis screen");
         hideAllScreens();
         AnalysisScreenObj.SetActive(true);
+    }
+
+    public IEnumerator showAnalysisScreenCoroutine()
+    {
+        hideAllScreens();
+
+        Debug.Log("Starting Rock Analysis...");
+
+        yield return new WaitForSeconds(1.0f); // Simulate slight delay
+
+        
+        var backend = BackendDataService.Instance;
+
+        if (backend == null || backend.LatestData == null || backend.LatestData.eva1 == null || backend.LatestData.eva1.spec == null)
+        {
+            Debug.LogWarning("Spec data not available from backend.");
+            analysisOutputText.text = "No rock data available.";
+            yield break;
+        }
+
+        var spec = backend.LatestData.eva1.spec;
+
+
+        var results = new Dictionary<string, float>
+        {
+            { "SiO2", (float)spec.SiO2 },
+            { "TiO2", (float)spec.TiO2 },
+            { "Al2O3", (float)spec.Al2O3 },
+            { "FeO",  (float)spec.FeO },
+            { "MnO",  (float)spec.MnO },
+            { "MgO",  (float)spec.MgO },
+            { "CaO",  (float)spec.CaO },
+            { "K2O",  (float)spec.K2O },
+            { "P2O3", (float)spec.P2O3 },
+            { "Other",(float)spec.other }
+        };
+
+        Debug.Log("Received SpecData from backend:");
+        foreach (var kvp in results)
+        {
+            Debug.Log($"{kvp.Key}: {kvp.Value}");
+        }
+
+        // Build output string for UI
+        string output = "EVA1 chemical composition:\n";
+        foreach (var kvp in results)
+        {
+            output += $"{kvp.Key}: {kvp.Value}\n";
+        }
+
+        // Update UI
+        analysisOutputText.text = output;
+        AnalysisScreenObj.SetActive(true);
+
+        // Prepare entry, don't save yet
+        int newId = rockAnalysisDatabase.Count > 0 ? rockAnalysisDatabase.Max(entry => entry.id) + 1 : 1;
+        RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results);
+
+
+        currentEntryBeingEdited = newEntry;
+
+        Debug.Log("Analysis ready. Awaiting Save Record button.");
     }
 
     // public IEnumerator showAnalysisScreenCoroutine()
@@ -217,97 +277,33 @@ public class UIManager : MonoBehaviour
 
     //     Debug.Log("Starting Rock Analysis...");
 
-    //     yield return new WaitForSeconds(1.0f); // Simulate slight delay
+    //     var results = analyzer.AnalyzeRock();
+    //     Debug.Log("Finished fetching data from server.");
 
-        
-    //     var backend = BackendDataService.Instance;
-
-    //     if (backend == null || backend.LatestData == null || backend.LatestData.eva1 == null || backend.LatestData.eva1.spec == null)
-    //     {
-    //         Debug.LogWarning("Spec data not available from backend.");
-    //         analysisOutputText.text = "No rock data available.";
-    //         yield break;
-    //     }
-
-    //     var spec = backend.LatestData.eva1.spec;
-
-
-    //     var results = new Dictionary<string, float>
-    //     {
-    //         { "SiO2", (float)spec.SiO2 },
-    //         { "TiO2", (float)spec.TiO2 },
-    //         { "Al2O3", (float)spec.Al2O3 },
-    //         { "FeO",  (float)spec.FeO },
-    //         { "MnO",  (float)spec.MnO },
-    //         { "MgO",  (float)spec.MgO },
-    //         { "CaO",  (float)spec.CaO },
-    //         { "K2O",  (float)spec.K2O },
-    //         { "P2O3", (float)spec.P2O3 },
-    //         { "Other",(float)spec.other }
-    //     };
-
-    //     Debug.Log("Received SpecData from backend:");
+    //     Debug.Log("Received chemical composition from server:");
     //     foreach (var kvp in results)
     //     {
     //         Debug.Log($"{kvp.Key}: {kvp.Value}");
     //     }
 
-    //     // Build output string for UI
+    //     yield return new WaitForSeconds(1.0f);
+
     //     string output = "EVA1 chemical composition:\n";
     //     foreach (var kvp in results)
     //     {
     //         output += $"{kvp.Key}: {kvp.Value}\n";
     //     }
 
-    //     // Update UI
     //     analysisOutputText.text = output;
     //     AnalysisScreenObj.SetActive(true);
 
-    //     // Prepare entry, don't save yet
+    //     // Only create the entry, don't add to database yet
     //     int newId = rockAnalysisDatabase.Count > 0 ? rockAnalysisDatabase.Max(entry => entry.id) + 1 : 1;
-    //     RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results)
-    //     {
-    //         name = spec.name // If you want to capture the rock name
-    //     };
-
+    //     RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results);
     //     currentEntryBeingEdited = newEntry;
 
-    //     Debug.Log("Analysis ready. Awaiting Save Record button.");
+    //     Debug.Log("Analysis ready, waiting for user to save record.");
     // }
-
-    public IEnumerator showAnalysisScreenCoroutine()
-    {
-        hideAllScreens();
-
-        Debug.Log("Starting Rock Analysis...");
-
-        var results = analyzer.AnalyzeRock();
-        Debug.Log("Finished fetching data from server.");
-
-        Debug.Log("Received chemical composition from server:");
-        foreach (var kvp in results)
-        {
-            Debug.Log($"{kvp.Key}: {kvp.Value}");
-        }
-
-        yield return new WaitForSeconds(1.0f);
-
-        string output = "EVA1 chemical composition:\n";
-        foreach (var kvp in results)
-        {
-            output += $"{kvp.Key}: {kvp.Value}\n";
-        }
-
-        analysisOutputText.text = output;
-        AnalysisScreenObj.SetActive(true);
-
-        // Only create the entry, don't add to database yet
-        int newId = rockAnalysisDatabase.Count > 0 ? rockAnalysisDatabase.Max(entry => entry.id) + 1 : 1;
-        RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results);
-        currentEntryBeingEdited = newEntry;
-
-        Debug.Log("Analysis ready, waiting for user to save record.");
-    }
 
 
 

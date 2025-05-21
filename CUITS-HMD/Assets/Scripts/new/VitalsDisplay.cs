@@ -85,7 +85,16 @@ public class VitalsDisplay : MonoBehaviour
                 
                 Debug.Log($"VitalsDisplay: Updating data (#{updateCounter}), timestamp: {lastUpdateTimestamp}");
                 
-                if (title != null) title.text = $"EVA Vitals";
+                // Update title to show which EVA numbers have data
+                string evaNumbers = "";
+                if (data.eva1 != null && data.eva1.telemetry != null)
+                    evaNumbers += "1";
+                if (data.eva2 != null && data.eva2.telemetry != null)
+                    evaNumbers += evaNumbers.Length > 0 ? " & 2" : "2";
+                
+                if (title != null) 
+                    title.text = evaNumbers.Length > 0 ? $"EVA {evaNumbers} Vitals" : "EVA Vitals";
+                
                 if (statusText != null) statusText.text = $"Data Updated: {DateTime.Now.ToString("HH:mm:ss")}";
                 
                 UpdateEVA1Display(data);
@@ -132,6 +141,7 @@ public class VitalsDisplay : MonoBehaviour
         if (data.eva1 != null && data.eva1.telemetry != null)
         {
             var telemetryEva1 = data.eva1.telemetry;
+            
             display_batt_time_left_eva1.text = "Battery time left: " + telemetryEva1.batt_time_left.ToString("F1");
             display_oxy_pri_storage_eva1.text = "Primary oxygen storage: " + telemetryEva1.oxy_pri_storage.ToString("F1");
             display_oxy_sec_storage_eva1.text = "Secondary oxygen storage: " + telemetryEva1.oxy_sec_storage.ToString("F1");
