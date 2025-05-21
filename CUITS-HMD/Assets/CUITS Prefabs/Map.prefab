@@ -7736,9 +7736,9 @@ MonoBehaviour:
   offset: {x: -0.49, y: 0.105, z: -0.1}
   aspectRatio: 0.456
   useLocalSpace: 1
-  lineWidth: 0.1
+  lineWidth: 0.002
   zOffset: 0.1
-  lineColor: {r: 1, g: 0, b: 0, a: 1}
+  lineColor: {r: 0, g: 0.18836021, b: 1, a: 1}
 --- !u!1 &5324994407317208312
 GameObject:
   m_ObjectHideFlags: 0
@@ -8978,9 +8978,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 2605567265432461361}
-  tileSize: 2
-  offset: {x: -0.35, y: 0.03, z: -0.1}
-  aspectRatio: 1
+  tileSize: 0.0344
+  offset: {x: -0.49, y: 0.105, z: -0.1}
+  aspectRatio: 0.456
   useLocalSpace: 1
   lineWidth: 0.1
   zOffset: 0.1
@@ -9961,11 +9961,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 396188885694250010}
-  tileSize: 2
-  offset: {x: -0.35, y: 0.03, z: -0.1}
-  aspectRatio: 1
+  tileSize: 0.0344
+  offset: {x: -0.49, y: 0.105, z: -0.1}
+  aspectRatio: 0.456
   useLocalSpace: 1
-  lineWidth: 0.1
+  lineWidth: 0.002
   zOffset: 0.1
   lineColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7917904826461423456
