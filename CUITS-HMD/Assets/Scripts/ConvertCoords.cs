@@ -5,7 +5,6 @@ using UnityEngine;
 public class ConvertCoords : MonoBehaviour
 {
     public GameObject pin;
-    public TSS_DATA TSS;
 
     double uniposx;
     double uniposy;
@@ -18,10 +17,20 @@ public class ConvertCoords : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        uniposx = .00293 + (.0030824 * (TSS.imu.dcu.eva1.posx - 298355));
-        uniposy = .04249 + (.0026632407 * (TSS.imu.dcu.eva1.posy - 3272383));
-
-        pin.transform.position = new Vector3((float)uniposx, (float)uniposy, 0);
+        // Check if BackendDataService is available with data
+        if (BackendDataService.Instance != null && 
+            BackendDataService.Instance.LatestData != null && 
+            BackendDataService.Instance.LatestData.eva1 != null && 
+            BackendDataService.Instance.LatestData.eva1.imu != null)
+        {
+            float posx = BackendDataService.Instance.LatestData.eva1.imu.posx;
+            float posy = BackendDataService.Instance.LatestData.eva1.imu.posy;
+            
+            // Use the same conversion formula but with data from BackendDataService
+            uniposx = .00293 + (.0030824 * (posx - 298355));
+            uniposy = .04249 + (.0026632407 * (posy - 3272383));
+            
+            pin.transform.position = new Vector3((float)uniposx, (float)uniposy, 0);
+        }
     }
-
 }

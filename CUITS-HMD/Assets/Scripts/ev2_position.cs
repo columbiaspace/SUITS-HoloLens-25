@@ -7,45 +7,55 @@ public class ev2_position : MonoBehaviour
     private Vector3 initialPosition;
     private bool hasReceivedPosition = false;
     
+    // Scale and offset values from the original APIClient conversion
+    private const float SCALE_FACTOR = 0.162f;
+    private const float OFFSET_X = 916.52f;
+    private const float OFFSET_Y = 1619.58f;
+    private const float Z_POS = -0.5f;
 
     void Start()
     {
-
         // Store the initial position when the script starts
         initialPosition = transform.localPosition;
         Debug.Log($"[ev2_position] Start - Initial position: {initialPosition}");
-        
 
-        // Check if APIClient exists
-        if (FindObjectOfType<APIClient>() == null)
+        // Check if BackendDataService exists
+        if (BackendDataService.Instance == null)
         {
-            Debug.LogError("[ev2_position] ERROR: No APIClient found in scene! Please add APIClient component to a GameObject.");
+            Debug.LogError("[ev2_position] ERROR: No BackendDataService found in scene! Please add BackendDataService component to a GameObject.");
         }
     }
 
     void Update()
     {
-        // Check if we have a valid position from APIClient
-        if (APIClient.LatestPosition2 != Vector3.zero)
+        // Get position from BackendDataService instead of APIClient
+        if (BackendDataService.Instance != null && 
+            BackendDataService.Instance.LatestData != null && 
+            BackendDataService.Instance.LatestData.eva2 != null && 
+            BackendDataService.Instance.LatestData.eva2.imu != null)
         {
-            if (!hasReceivedPosition)
-            {
-                Debug.Log($"[ev2_position] First position received: {APIClient.LatestPosition2}");
-                hasReceivedPosition = true;
-            }
-
-            // Use the static LatestPosition from APIClient
-            Vector3 targetPosition = APIClient.LatestPosition2;
+            float posx = BackendDataService.Instance.LatestData.eva2.imu.posx ;
+            float posy = BackendDataService.Instance.LatestData.eva2.imu.posy ;
             
-            // Log the positions for debugging
-            Debug.Log($"[ev2_position] Current: {transform.localPosition}, Target: {targetPosition}");
-
-            // Move the GameObject this script is attached to
-            transform.localPosition = targetPosition;
+            // Only update if we have valid position data
+            if (posx != 0 || posy != 0) 
+            {
+                if (!hasReceivedPosition)
+                {
+                    Debug.Log($"[ev2_position] First position received: posx={posx}, posy={posy}");
+                    hasReceivedPosition = true;
+                }
+                
+                // Convert coordinates using the same formula as in the original APIClient
+                Vector3 targetPosition = new Vector3(SCALE_FACTOR * posx + OFFSET_X, SCALE_FACTOR * posy + OFFSET_Y, Z_POS);
+                
+                // Move the GameObject this script is attached to
+                transform.localPosition = targetPosition;
+            }
         }
         else
         {
-            Debug.LogWarning("[ev2_position] Waiting for valid position from APIClient...");
+            Debug.LogWarning("[ev2_position] Waiting for valid position from BackendDataService...");
         }
     }
 }

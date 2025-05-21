@@ -54,7 +54,7 @@ public class AllDataResponse
     public Errors errors;
     public UIAData uia;
     public RoverData rover;
-    public long last_updated; // Assuming backend sends it as a Unix timestamp
+    public double last_updated; // Changed from long to double for Unix timestamp in JSON
 
     // New fields for integrated data
     public BackendProcedureStep current_procedure_step; 
@@ -65,22 +65,22 @@ public class AllDataResponse
 [System.Serializable]
 public class EvaStates
 {
-    public float started;
-    public float paused;
-    public float completed;
-    public float total_time;
-    public float uia_started;
-    public float uia_completed;
-    public float uia_time;
-    public float dcu_started;
-    public float dcu_completed;
-    public float dcu_time;
-    public float rover_started;
-    public float rover_completed;
-    public float rover_time;
-    public float spec_started;
-    public float spec_completed;
-    public float spec_time;
+    public double started;
+    public double paused;
+    public double completed;
+    public double total_time;
+    public double uia_started;
+    public double uia_completed;
+    public double uia_time;
+    public double dcu_started;
+    public double dcu_completed;
+    public double dcu_time;
+    public double rover_started;
+    public double rover_completed;
+    public double rover_time;
+    public double spec_started;
+    public double spec_completed;
+    public double spec_time;
 }
 
 [System.Serializable]
@@ -96,8 +96,8 @@ public class EvaData
 public class DCUData
 {
     // Field names from tss_client.py: battery, oxygen, comms, fan, pump, co2
-    // Assuming boolean values, adjust if they are floats representing switch state (0 or 1)
-    public float battery; // Changed to float to match tss_client.py (seems to send 0.0 or 1.0)
+    // All are float values (0.0 or 1.0) representing switch states
+    public float battery;
     public float oxygen;
     public float comms;
     public float fan;
@@ -121,7 +121,7 @@ public class TelemetryData // Corresponds to _get_eva_telemetry in tss_client.py
     public double oxy_sec_storage;
     public double oxy_pri_pressure;
     public double oxy_sec_pressure;
-    public int oxy_time_left; // Kept as int from Vitals2025, tss_client implies float
+    public double oxy_time_left; // Changed from int to double
     public double heart_rate;
     public double oxy_consumption;
     public double co2_production;
@@ -143,7 +143,7 @@ public class TelemetryData // Corresponds to _get_eva_telemetry in tss_client.py
 [System.Serializable]
 public class SpecData
 {
-    public int id; // Rock ID
+    public float id; // Changed from int to float to match the 0.0 in JSON
     public string name; // Rock name added by backend
     public double SiO2;
     public double TiO2;
@@ -154,13 +154,13 @@ public class SpecData
     public double CaO;
     public double K2O;
     public double P2O3;
-    public double other; // if tss_client has an "other" field
+    public double other;
 }
 
 [System.Serializable]
 public class Errors // from tss_client.get_error_states()
 {
-    public float error1; // Assuming generic names, adjust if backend provides specific ones
+    public float error1;
     public float error2;
     public float error3;
 }
@@ -169,17 +169,17 @@ public class Errors // from tss_client.get_error_states()
 public class UIAData // from tss_client.get_uia()
 {
     // Field names from tss_client.py get_uia() and main.py (snake_case)
-    // Changed to match uia_labels in tss_client.py and assume float (0.0/1.0) from send_command
+    // All are float (0.0/1.0) representing switch states
     public float emu1_power;
-    public float ev1_supply; // eva1_water_supply in TSS_DATA
-    public float ev1_waste;  // eva1_water_waste in TSS_DATA
-    public float ev1_oxygen; // eva1_oxy in TSS_DATA
+    public float ev1_supply;
+    public float ev1_waste;
+    public float ev1_oxygen;
     public float emu2_power;
-    public float ev2_supply; // eva2_water_supply in TSS_DATA
-    public float ev2_waste;  // eva2_water_waste in TSS_DATA
-    public float ev2_oxygen; // eva2_oxy in TSS_DATA
+    public float ev2_supply;
+    public float ev2_waste;
+    public float ev2_oxygen;
     public float o2_vent;
-    public float depress_pump; // depress in TSS_DATA
+    public float depress_pump;
 }
 
 [System.Serializable]
@@ -187,9 +187,6 @@ public class RoverData // from tss_client.get_rover()
 {
     public float posx;
     public float posy;
-    // POI data might be part of this or a separate structure if needed from /rover_loc
-    // For now, only including direct rover telemetry.
-    // public int qr_id; // Not present in tss_client.get_rover() direct output, but in TSS_DATA.cs
     public float poi_1_x;
     public float poi_1_y;
     public float poi_2_x;
@@ -252,15 +249,16 @@ public class BackendDataService : MonoBehaviour
                 string json = request.downloadHandler.text;
                 try
                 {
-                    LatestData = JsonConvert.DeserializeObject<AllDataResponse>(json);
+                    // Use settings to handle floating-point values correctly
+                    var settings = new JsonSerializerSettings
+                    {
+                        FloatParseHandling = FloatParseHandling.Double
+                    };
+                    
+                    LatestData = JsonConvert.DeserializeObject<AllDataResponse>(json, settings);
                     if (LatestData != null)
                     {
                          Debug.Log($"Successfully fetched and parsed data from {fullUrl}.");
-                         // Example: Log procedure step if available
-                         // if (LatestData.current_procedure_step != null)
-                         // {
-                         //    Debug.Log($"Current Procedure: {LatestData.current_procedure_step.procedure_name}, Step: {LatestData.current_procedure_step.step_number}");
-                         // }
                     }
                     else
                     {
