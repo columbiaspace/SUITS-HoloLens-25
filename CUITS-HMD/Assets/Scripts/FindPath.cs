@@ -22,12 +22,21 @@ public class FindPath : MonoBehaviour
       new Vector2Int(12, 3),
       new Vector2Int(12, 6)
   };
+  
+  /*private List<Vector2Int> pois = new List<Vector2Int> {
+        new Vector2Int(Mathf.RoundToInt((5730 + BackendDataService.Instance.LatestData.rover.poi_1_x) / 10),
+            Mathf.RoundToInt(-(9940 + BackendDataService.Instance.LatestData.rover.poi_1_y) / 10)), // Assuming these are (x,y) coordinates
+        new Vector2Int(Mathf.RoundToInt((5730 + BackendDataService.Instance.LatestData.rover.poi_2_x) / 10),
+            Mathf.RoundToInt(-(9940 + BackendDataService.Instance.LatestData.rover.poi_2_y) / 10)),
+        new Vector2Int(Mathf.RoundToInt((5730 + BackendDataService.Instance.LatestData.rover.poi_3_x) / 10), 
+            Mathf.RoundToInt(-(9940 + BackendDataService.Instance.LatestData.rover.poi_3_y) / 10))
+    };*/
 
 
 
 
   // Added Awake method to verify script initialization
-  void Awake()
+    void Awake()
   {
       Debug.Log("========== FindPath: AWAKE CALLED ==========");
   }
