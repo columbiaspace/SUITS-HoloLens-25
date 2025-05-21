@@ -7484,7 +7484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 6751459792144277067}
   tileSize: 0.018
-  offset: {x: -0.13, y: -2.38, z: -0.11}
+  offset: {x: -0.13, y: -0.053, z: -0.11}
   aspectRatio: 1
   useLocalSpace: 1
   lineWidth: 0.002
@@ -8284,6 +8284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   display: {fileID: 7558074323816840697}
+  showHoursMinutesSeconds: 1
 --- !u!1 &5683679546042916805
 GameObject:
   m_ObjectHideFlags: 0
@@ -9063,7 +9064,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 5399788663738590458}
   tileSize: 0.018
-  offset: {x: -0.13, y: -2.38, z: -0.11}
+  offset: {x: -0.13, y: -0.053, z: -0.11}
   aspectRatio: 1
   useLocalSpace: 1
   lineWidth: 0.002
@@ -11183,7 +11184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 2455578676789965523}
   tileSize: 0.018
-  offset: {x: -0.13, y: -2.38, z: -0.11}
+  offset: {x: -0.13, y: -0.053, z: -0.11}
   aspectRatio: 1
   useLocalSpace: 1
   lineWidth: 0.002
@@ -12740,6 +12741,13 @@ MonoBehaviour:
   - {fileID: 8265814660389727297}
   - {fileID: 6839795725877843671}
   - {fileID: 875426972230177483}
+  ev1PinPrefab: {fileID: 0}
+  ev2PinPrefab: {fileID: 0}
+  pinLabelPrefab: {fileID: 0}
+  maxPins: 10
+  showBackendPins: 1
+  trackEVAPositions: 1
+  evaToTrack: 1
 --- !u!1001 &2765800210271770441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12936,6 +12944,13 @@ MonoBehaviour:
   - {fileID: 8265814660389727297}
   - {fileID: 6839795725877843671}
   - {fileID: 875426972230177483}
+  ev1PinPrefab: {fileID: 0}
+  ev2PinPrefab: {fileID: 0}
+  pinLabelPrefab: {fileID: 0}
+  maxPins: 10
+  showBackendPins: 1
+  trackEVAPositions: 1
+  evaToTrack: 1
 --- !u!114 &7638329992338143390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13141,6 +13156,13 @@ MonoBehaviour:
   - {fileID: 8265814660389727297}
   - {fileID: 6839795725877843671}
   - {fileID: 875426972230177483}
+  ev1PinPrefab: {fileID: 0}
+  ev2PinPrefab: {fileID: 0}
+  pinLabelPrefab: {fileID: 0}
+  maxPins: 10
+  showBackendPins: 1
+  trackEVAPositions: 1
+  evaToTrack: 1
 --- !u!114 &9044663778886112658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13356,6 +13378,13 @@ MonoBehaviour:
   - {fileID: 8265814660389727297}
   - {fileID: 6839795725877843671}
   - {fileID: 875426972230177483}
+  ev1PinPrefab: {fileID: 0}
+  ev2PinPrefab: {fileID: 0}
+  pinLabelPrefab: {fileID: 0}
+  maxPins: 10
+  showBackendPins: 1
+  trackEVAPositions: 1
+  evaToTrack: 1
 --- !u!114 &1318602966145881166
 MonoBehaviour:
   m_ObjectHideFlags: 0
