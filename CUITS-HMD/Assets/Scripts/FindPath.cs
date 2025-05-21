@@ -27,27 +27,30 @@ public class FindPath : MonoBehaviour
    }
 
 
-   // This public method can be called when a button is clicked
-   public void FindPathOnButtonClick()
-   {
-       Debug.Log("========== FindPath: BUTTON CLICKED ==========");
-      
-       if (pathDrawer == null)
-       {
-           Debug.LogError("FindPath: PathDrawer not assigned in FindPath script.");
-           return;
-       }
-      
-       // Build adjacency list if it hasn't been built yet
-       if (adjacencyList == null || adjacencyList.Count == 0)
-       {
-           Debug.Log("FindPath: Building adjacency list...");
-           adjacencyList = BuildAdjacencyList(obstacleMap);
-           Debug.Log($"FindPath: Adjacency list built with {adjacencyList.Count} nodes");
-       }
-      
-       // Start the process to fetch EVA position and find path
-       StartCoroutine(FetchEvaPositionAndProcessPath());
+    // This public method can be called when a button is clicked
+    public void FindPathOnButtonClick()
+    {
+        Debug.Log("========== FindPath: BUTTON CLICKED ==========");
+
+        if (pathDrawer == null)
+        {
+            Debug.LogError("FindPath: PathDrawer not assigned in FindPath script.");
+            return;
+        }
+
+        // Build adjacency list if it hasn't been built yet
+        if (adjacencyList == null || adjacencyList.Count == 0)
+        {
+            Debug.Log("FindPath: Building adjacency list...");
+            adjacencyList = BuildAdjacencyList(obstacleMap);
+            Debug.Log($"FindPath: Adjacency list built with {adjacencyList.Count} nodes");
+        }
+
+        // Start the process to fetch EVA position and find path
+        StartCoroutine(FetchEvaPositionAndProcessPath());
+        
+        // Toggle the visibility of the line by calling the method in PathDrawer
+        pathDrawer.ToggleVisibility();
    }
 
 
@@ -118,7 +121,11 @@ public class FindPath : MonoBehaviour
 
    IEnumerator FetchEvaPositionAndProcessPath()
    {
-       Debug.Log("========== FindPath: FETCHING EVA POSITION ==========");
+        yield return new WaitForSeconds(2);
+        //Debug.LogError($"FindPath: Error fetching EVA position: {request.error}. Using default start (0,0) for testing.");
+        startNode = new Vector2Int(6, 14);
+        ComputeAndDrawPath();
+       /*Debug.Log("========== FindPath: FETCHING EVA POSITION ==========");
       
        string evaPositionUrl = "http://127.0.0.1:8000/eva1/imu";
        Debug.Log($"FindPath: Fetching EVA position from: {evaPositionUrl}");
@@ -126,17 +133,17 @@ public class FindPath : MonoBehaviour
 
        using (UnityWebRequest request = UnityWebRequest.Get(evaPositionUrl))
        {
-           Debug.Log("FindPath: Sending web request...");
-           yield return request.SendWebRequest();
-           Debug.Log($"FindPath: Request complete with status: {request.result}");
-
+            Debug.Log("FindPath: Sending web request...");
+            yield return request.SendWebRequest();
+            Debug.Log($"FindPath: Request complete with status: {request.result}");
+        
 
            if (false) //temp switch up
-           {
-               string jsonResponse = request.downloadHandler.text;
-               Debug.Log($"EVA Position JSON received: {jsonResponse}");
-               try
-               {
+            {
+                string jsonResponse = request.downloadHandler.text;
+                Debug.Log($"EVA Position JSON received: {jsonResponse}");
+                try
+                {
                    EvaPositionResponse evaPosition = JsonUtility.FromJson<EvaPositionResponse>(jsonResponse);
                    if (evaPosition != null)
                    {
@@ -156,13 +163,11 @@ public class FindPath : MonoBehaviour
            }
            else
            {
-               Debug.LogError($"FindPath: Error fetching EVA position: {request.error}. Using default start (0,0) for testing.");
-               startNode = new Vector2Int(6, 14);
-               ComputeAndDrawPath();
+               
            }
 
 
-       }
+       }*/
       
    }
 
