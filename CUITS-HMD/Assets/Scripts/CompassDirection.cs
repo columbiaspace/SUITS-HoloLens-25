@@ -1,31 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CompassDirection : MonoBehaviour
 {
-    public RectTransform compassImage; // ← Drag your Image (compass) here in inspector
-    private float currentZRotation = 0f;
+    public Image compassImage; // Drag your compass Image here in inspector
+    private RectTransform compassRect;
+    private float currentZRotation = 0f; 
+    
+    [Header("Testing")]
+    public bool testMode = false;
+    public float testHeading = 0f;
+    public float rotationSpeed = 30f; // Degrees per second
+
+    void Start()
+    {
+        // Get RectTransform from the compass image
+        if (compassImage != null)
+        {
+            compassRect = compassImage.rectTransform;
+        }
+        else
+        {
+            Debug.LogError("Compass Image not assigned!");
+        }
+    }
 
     void Update()
     {
-        var backend = BackendDataService.Instance;
+        if (compassRect == null) return;
 
-        if (backend == null || backend.LatestData == null || backend.LatestData.eva1 == null || backend.LatestData.eva1.imu == null)
+        if (testMode)
         {
-            Debug.LogWarning("Waiting for backend heading data...");
-            return;
+            // Allow manual control with keyboard
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                testHeading += rotationSpeed * Time.deltaTime;
+                if (testHeading >= 360f)
+                    testHeading -= 360f;
+            }
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                testHeading -= rotationSpeed * Time.deltaTime;
+                if (testHeading < 0f)
+                    testHeading += 360f;
+            }
+
+            // Rotate the compass image based on test heading
+            float rotationZ = -testHeading;
+            compassRect.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
+            currentZRotation = rotationZ;
         }
+        else
+        {
+            var backend = BackendDataService.Instance;
 
-        float heading = backend.LatestData.eva1.imu.heading;
+            if (backend == null || backend.LatestData == null || backend.LatestData.eva1 == null || backend.LatestData.eva1.imu == null)
+            {
+                Debug.LogWarning("Waiting for backend heading data...");
+                return;
+            }
 
-        if (heading < 0f)
-            heading += 360f;
+            float heading = backend.LatestData.eva1.imu.heading;
 
-        // Rotate the compass image in opposite direction so it looks like you're turning
-        float rotationZ = -heading;
-        compassImage.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
-        currentZRotation = rotationZ;
+            if (heading < 0f)
+                heading += 360f;
+
+            // Rotate the compass image in opposite direction so it looks like you're turning
+            float rotationZ = -heading;
+            compassRect.localRotation = Quaternion.Euler(0f, 0f, rotationZ);
+            currentZRotation = rotationZ;
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
