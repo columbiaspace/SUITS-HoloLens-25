@@ -13,11 +13,11 @@ public class ProcedureManager : MonoBehaviour
     public GameObject EMU1_POWER_Indicator;
     public GameObject EV1_SUPPLY_Indicator;
     public GameObject EV1_WASTE_Indicator;
-    // public GameObject EV2_SUPPLY_Indicator; // Assuming single EV focus for now based on Egress.cs
-    // public GameObject EV2_WASTE_Indicator;  // If procedures are EV specific
-    // public GameObject EMU2_POWER_Indicator;
+    public GameObject EMU2_POWER_Indicator;
+    public GameObject EV2_SUPPLY_Indicator;
+    public GameObject EV2_WASTE_Indicator;
     public GameObject EMU1_OXY_Indicator;
-    // public GameObject EMU2_OXY_Indicator;
+    public GameObject EMU2_OXY_Indicator;
     public GameObject O2_VENT_Indicator;
     public GameObject DEPRESS_PUMP_Indicator;
     // Add more GameObjects for DCU switch indicators if they are separate visual elements
@@ -38,13 +38,27 @@ public class ProcedureManager : MonoBehaviour
     void InitializeIndicators()
     {
         procedureItemIndicators = new Dictionary<string, GameObject>();
+        
+        // EV1 / EMU1 Indicators
         if (EMU1_POWER_Indicator != null) procedureItemIndicators["EMU1_POWER"] = EMU1_POWER_Indicator;
-        if (EV1_SUPPLY_Indicator != null) procedureItemIndicators["EV1_WATER_SUPPLY"] = EV1_SUPPLY_Indicator; // Match potential backend key
-        if (EV1_WASTE_Indicator != null) procedureItemIndicators["EV1_WATER_WASTE"] = EV1_WASTE_Indicator;   // Match potential backend key
+        if (EV1_SUPPLY_Indicator != null) procedureItemIndicators["EV1_SUPPLY"] = EV1_SUPPLY_Indicator;
+        if (EV1_WASTE_Indicator != null) procedureItemIndicators["EV1_WASTE"] = EV1_WASTE_Indicator;
         if (EMU1_OXY_Indicator != null) procedureItemIndicators["EMU1_OXY"] = EMU1_OXY_Indicator;
+        
+        // EV2 / EMU2 Indicators (Mirrors Egress.cs names, backend needs to match these keys if used)
+        if (EMU2_POWER_Indicator != null) procedureItemIndicators["EMU2_POWER"] = EMU2_POWER_Indicator;
+        if (EV2_SUPPLY_Indicator != null) procedureItemIndicators["EV2_SUPPLY"] = EV2_SUPPLY_Indicator;
+        if (EV2_WASTE_Indicator != null) procedureItemIndicators["EV2_WASTE"] = EV2_WASTE_Indicator;
+        if (EMU2_OXY_Indicator != null) procedureItemIndicators["EMU2_OXY"] = EMU2_OXY_Indicator;
+
+        // Common UIA Indicators
         if (O2_VENT_Indicator != null) procedureItemIndicators["O2_VENT"] = O2_VENT_Indicator;
         if (DEPRESS_PUMP_Indicator != null) procedureItemIndicators["DEPRESS_PUMP"] = DEPRESS_PUMP_Indicator;
-        // Add mappings for other indicators (EV2, DCU items if they have separate GameObjects)
+
+        // Note: DCU items from backend like "DCU_BATT_UMB", "DCU_OXY_PRI" are not mapped here by default.
+        // If visual indicators are needed for these DCU states, add corresponding GameObjects
+        // and map them here. Otherwise, they will trigger the Debug.LogWarning in the Update() method,
+        // implying they are HMD-based checks guided by the instruction text.
     }
 
     void SetAllIndicators(bool isActive)
