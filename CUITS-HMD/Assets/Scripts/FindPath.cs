@@ -22,12 +22,21 @@ public class FindPath : MonoBehaviour
       new Vector2Int(12, 3),
       new Vector2Int(12, 6)
   };
+  
+  /*private List<Vector2Int> pois = new List<Vector2Int> {
+        new Vector2Int(Mathf.RoundToInt((5730 + BackendDataService.Instance.LatestData.rover.poi_1_x) / 10),
+            Mathf.RoundToInt(-(9940 + BackendDataService.Instance.LatestData.rover.poi_1_y) / 10)), // Assuming these are (x,y) coordinates
+        new Vector2Int(Mathf.RoundToInt((5730 + BackendDataService.Instance.LatestData.rover.poi_2_x) / 10),
+            Mathf.RoundToInt(-(9940 + BackendDataService.Instance.LatestData.rover.poi_2_y) / 10)),
+        new Vector2Int(Mathf.RoundToInt((5730 + BackendDataService.Instance.LatestData.rover.poi_3_x) / 10), 
+            Mathf.RoundToInt(-(9940 + BackendDataService.Instance.LatestData.rover.poi_3_y) / 10))
+    };*/
 
 
 
 
   // Added Awake method to verify script initialization
-  void Awake()
+    void Awake()
   {
       Debug.Log("========== FindPath: AWAKE CALLED ==========");
   }
@@ -142,62 +151,76 @@ public class FindPath : MonoBehaviour
 
 
 
-  IEnumerator FetchEvaPositionAndProcessPath()
-  {
-       yield return new WaitForSeconds(2);
-       //Debug.LogError($"FindPath: Error fetching EVA position: {request.error}. Using default start (0,0) for testing.");
-       startNode = new Vector2Int(6, 14);
-       ComputeAndDrawPath();
+    IEnumerator FetchEvaPositionAndProcessPath()
+    {
+        if (BackendDataService.Instance != null &&
+             BackendDataService.Instance.LatestData != null &&
+             BackendDataService.Instance.LatestData.eva1 != null &&
+             BackendDataService.Instance.LatestData.eva1.imu != null)
+        {
+            float posx = BackendDataService.Instance.LatestData.eva1.imu.posx;
+            float posy = BackendDataService.Instance.LatestData.eva1.imu.posy;
+           Debug.Log($"TSS COORDS: {posx} {posy}");
+            startNode = new Vector2Int(Mathf.RoundToInt((5730 + posx) / 10),Mathf.RoundToInt(-(9940 + posy) / 10));
+        }
+        else
+        {
+            Debug.LogWarning("[ev1_position] Waiting for valid position from BackendDataService...");
+            startNode = new Vector2Int(6, 14);
+        }
+        //Debug.LogError($"FindPath: Error fetching EVA position: {request.error}. Using default start (0,0) for testing.");
+        ComputeAndDrawPath();
+       yield return null;
       /*Debug.Log("========== FindPath: FETCHING EVA POSITION ==========");
-    
-      string evaPositionUrl = "http://127.0.0.1:8000/eva1/imu";
-      Debug.Log($"FindPath: Fetching EVA position from: {evaPositionUrl}");
+
+        string evaPositionUrl = "http://127.0.0.1:8000/eva1/imu";
+        Debug.Log($"FindPath: Fetching EVA position from: {evaPositionUrl}");
 
 
 
 
-      using (UnityWebRequest request = UnityWebRequest.Get(evaPositionUrl))
-      {
-           Debug.Log("FindPath: Sending web request...");
-           yield return request.SendWebRequest();
-           Debug.Log($"FindPath: Request complete with status: {request.result}");
-      
-
-
-          if (false) //temp switch up
-           {
-               string jsonResponse = request.downloadHandler.text;
-               Debug.Log($"EVA Position JSON received: {jsonResponse}");
-               try
-               {
-                  EvaPositionResponse evaPosition = JsonUtility.FromJson<EvaPositionResponse>(jsonResponse);
-                  if (evaPosition != null)
-                  {
-                      startNode = new Vector2Int(Mathf.RoundToInt(evaPosition.posx), Mathf.RoundToInt(evaPosition.posy));
-                      Debug.Log($"FindPath: Start node set to: {startNode}");
-                      ComputeAndDrawPath();
-                  }
-                  else
-                  {
-                      Debug.LogError("Failed to parse EVA position from JSON. Response was null.");
-                  }
-              }
-              catch (System.Exception e) // Explicitly System.Exception
-              {
-                  Debug.LogError($"FindPath: Error parsing EVA position JSON: {e.Message}\nJSON: {jsonResponse}");
-              }
-          }
-          else
-          {
-             
-          }
+        using (UnityWebRequest request = UnityWebRequest.Get(evaPositionUrl))
+        {
+             Debug.Log("FindPath: Sending web request...");
+             yield return request.SendWebRequest();
+             Debug.Log($"FindPath: Request complete with status: {request.result}");
 
 
 
+            if (false) //temp switch up
+             {
+                 string jsonResponse = request.downloadHandler.text;
+                 Debug.Log($"EVA Position JSON received: {jsonResponse}");
+                 try
+                 {
+                    EvaPositionResponse evaPosition = JsonUtility.FromJson<EvaPositionResponse>(jsonResponse);
+                    if (evaPosition != null)
+                    {
+                        startNode = new Vector2Int(Mathf.RoundToInt(evaPosition.posx), Mathf.RoundToInt(evaPosition.posy));
+                        Debug.Log($"FindPath: Start node set to: {startNode}");
+                        ComputeAndDrawPath();
+                    }
+                    else
+                    {
+                        Debug.LogError("Failed to parse EVA position from JSON. Response was null.");
+                    }
+                }
+                catch (System.Exception e) // Explicitly System.Exception
+                {
+                    Debug.LogError($"FindPath: Error parsing EVA position JSON: {e.Message}\nJSON: {jsonResponse}");
+                }
+            }
+            else
+            {
 
-      }*/
-    
-  }
+            }
+
+
+
+
+        }*/
+
+    }
 
 
 
