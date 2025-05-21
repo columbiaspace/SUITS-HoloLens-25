@@ -68,6 +68,61 @@ public class VitalsDisplay : MonoBehaviour
         SetAllDisplaysToDefault("Waiting for data...");
     }
 
+    Color GetBatteryColor(double battTimeLeft)
+    {
+        if (battTimeLeft < 600) // <10 min
+            return Color.red;
+        if (battTimeLeft < 1800) // <30 min
+            return new Color(1f, 0.65f, 0f); // orange/yellow
+        return Color.green;
+    }
+
+    Color GetOxygenColor(double oxyTimeLeft)
+    {
+        if (oxyTimeLeft < 600) // <10 min
+            return Color.red;
+        if (oxyTimeLeft < 1800) // <30 min
+            return new Color(1f, 0.65f, 0f);
+        return Color.green;
+    }
+
+    Color GetHeartRateColor(double heartRate)
+    {
+        if (heartRate < 40 || heartRate > 160)
+            return Color.red;
+        if (heartRate < 50 || heartRate > 120)
+            return new Color(1f, 0.65f, 0f);
+        return Color.green;
+    }
+
+    Color GetSuitPressureColor(double suitPressure)
+    {
+        if (suitPressure < 3.8 || suitPressure > 4.3)
+            return Color.red;
+        if (suitPressure < 3.95 || suitPressure > 4.15)
+            return new Color(1f, 0.65f, 0f);
+        return Color.green;
+    }
+
+    Color GetHelmetCO2Color(double helmetCO2)
+    {
+        if (helmetCO2 > 10.0)
+            return Color.red;
+        if (helmetCO2 > 8.0)
+            return new Color(1f, 0.65f, 0f);
+        return Color.green;
+    }
+
+    Color GetTemperatureColor(double temperature)
+    {
+        // Thresholds now in Fahrenheit: 28°C = 82.4°F, 26°C = 78.8°F, 20°C = 68°F, 18°C = 64.4°F
+        if (temperature > 82.4 || temperature < 64.4)
+            return Color.red;
+        if (temperature > 78.8 || temperature < 68.0)
+            return new Color(1f, 0.65f, 0f);
+        return Color.green;
+    }
+
     void Update()
     {
         timeSinceLastSuccessfulUpdate += Time.deltaTime;
@@ -143,22 +198,47 @@ public class VitalsDisplay : MonoBehaviour
             var telemetryEva1 = data.eva1.telemetry;
             
             display_batt_time_left_eva1.text = "Battery time left: " + telemetryEva1.batt_time_left.ToString("F1");
+            display_batt_time_left_eva1.color = GetBatteryColor(telemetryEva1.batt_time_left);
+
             display_oxy_pri_storage_eva1.text = "Primary oxygen storage: " + telemetryEva1.oxy_pri_storage.ToString("F1");
+            // No warning coloring
+
             display_oxy_sec_storage_eva1.text = "Secondary oxygen storage: " + telemetryEva1.oxy_sec_storage.ToString("F1");
+            // No warning coloring
+
             display_oxy_time_left_eva1.text = "Oxygen time left: " + telemetryEva1.oxy_time_left.ToString("F0");
+            display_oxy_time_left_eva1.color = GetOxygenColor(telemetryEva1.oxy_time_left);
+
             display_heart_rate_eva1.text = "Heart rate: " + telemetryEva1.heart_rate.ToString("F0");
+            display_heart_rate_eva1.color = GetHeartRateColor(telemetryEva1.heart_rate);
+
             display_oxy_consumption_eva1.text = "Oxygen consumption: " + telemetryEva1.oxy_consumption.ToString("F2");
             display_co2_production_eva1.text = "CO2 production: " + telemetryEva1.co2_production.ToString("F2");
+
             display_suit_pressure_oxy_eva1.text = "Suit pressure O2: " + telemetryEva1.suit_pressure_oxy.ToString("F2");
+            // No warning coloring
+
             display_suit_pressure_co2_eva1.text = "Suit pressure CO2: " + telemetryEva1.suit_pressure_co2.ToString("F2");
+            // No warning coloring
+
             display_suit_pressure_other_eva1.text = "Suit pressure other: " + telemetryEva1.suit_pressure_other.ToString("F2");
+            // No warning coloring
+
             display_suit_pressure_total_eva1.text = "Suit pressure total: " + telemetryEva1.suit_pressure_total.ToString("F2");
+            display_suit_pressure_total_eva1.color = GetSuitPressureColor(telemetryEva1.suit_pressure_total);
+
             display_fan_pri_rpm_eva1.text = "Fan primary RPM: " + telemetryEva1.fan_pri_rpm.ToString("F0");
             display_fan_sec_rpm_eva1.text = "Fan secondary RPM: " + telemetryEva1.fan_sec_rpm.ToString("F0");
+
             display_helmet_pressure_co2_eva1.text = "Helmet pressure CO2: " + telemetryEva1.helmet_pressure_co2.ToString("F2");
+            display_helmet_pressure_co2_eva1.color = GetHelmetCO2Color(telemetryEva1.helmet_pressure_co2);
+
             display_scrubber_a_co2_storage_eva1.text = "Scrubber A CO2: " + telemetryEva1.scrubber_a_co2_storage.ToString("F1");
             display_scrubber_b_co2_storage_eva1.text = "Scrubber B CO2: " + telemetryEva1.scrubber_b_co2_storage.ToString("F1");
+
             display_temperature_eva1.text = "Temperature: " + telemetryEva1.temperature.ToString("F1");
+            display_temperature_eva1.color = GetTemperatureColor(telemetryEva1.temperature);
+
             display_coolant_ml_eva1.text = "Coolant ML: " + telemetryEva1.coolant_ml.ToString("F0");
             display_coolant_gas_pressure_eva1.text = "Coolant gas pressure: " + telemetryEva1.coolant_gas_pressure.ToString("F1");
             display_coolant_liquid_pressure_eva1.text = "Coolant liquid pressure: " + telemetryEva1.coolant_liquid_pressure.ToString("F1");
@@ -175,23 +255,49 @@ public class VitalsDisplay : MonoBehaviour
         if (data.eva2 != null && data.eva2.telemetry != null)
         {
             var telemetryEva2 = data.eva2.telemetry;
+
             display_batt_time_left_eva2.text = "Battery time left: " + telemetryEva2.batt_time_left.ToString("F1");
+            display_batt_time_left_eva2.color = GetBatteryColor(telemetryEva2.batt_time_left);
+
             display_oxy_pri_storage_eva2.text = "Primary oxygen storage: " + telemetryEva2.oxy_pri_storage.ToString("F1");
+            // No warning coloring
+
             display_oxy_sec_storage_eva2.text = "Secondary oxygen storage: " + telemetryEva2.oxy_sec_storage.ToString("F1");
+            // No warning coloring
+
             display_oxy_time_left_eva2.text = "Oxygen time left: " + telemetryEva2.oxy_time_left.ToString("F0");
+            display_oxy_time_left_eva2.color = GetOxygenColor(telemetryEva2.oxy_time_left);
+
             display_heart_rate_eva2.text = "Heart rate: " + telemetryEva2.heart_rate.ToString("F0");
+            display_heart_rate_eva2.color = GetHeartRateColor(telemetryEva2.heart_rate);
+
             display_oxy_consumption_eva2.text = "Oxygen consumption: " + telemetryEva2.oxy_consumption.ToString("F2");
             display_co2_production_eva2.text = "CO2 production: " + telemetryEva2.co2_production.ToString("F2");
+
             display_suit_pressure_oxy_eva2.text = "Suit pressure O2: " + telemetryEva2.suit_pressure_oxy.ToString("F2");
+            // No warning coloring
+
             display_suit_pressure_co2_eva2.text = "Suit pressure CO2: " + telemetryEva2.suit_pressure_co2.ToString("F2");
+            // No warning coloring
+
             display_suit_pressure_other_eva2.text = "Suit pressure other: " + telemetryEva2.suit_pressure_other.ToString("F2");
+            // No warning coloring
+
             display_suit_pressure_total_eva2.text = "Suit pressure total: " + telemetryEva2.suit_pressure_total.ToString("F2");
+            display_suit_pressure_total_eva2.color = GetSuitPressureColor(telemetryEva2.suit_pressure_total);
+
             display_fan_pri_rpm_eva2.text = "Fan primary RPM: " + telemetryEva2.fan_pri_rpm.ToString("F0");
             display_fan_sec_rpm_eva2.text = "Fan secondary RPM: " + telemetryEva2.fan_sec_rpm.ToString("F0");
+
             display_helmet_pressure_co2_eva2.text = "Helmet pressure CO2: " + telemetryEva2.helmet_pressure_co2.ToString("F2");
+            display_helmet_pressure_co2_eva2.color = GetHelmetCO2Color(telemetryEva2.helmet_pressure_co2);
+
             display_scrubber_a_co2_storage_eva2.text = "Scrubber A CO2: " + telemetryEva2.scrubber_a_co2_storage.ToString("F1"); 
             display_scrubber_b_co2_storage_eva2.text = "Scrubber B CO2: " + telemetryEva2.scrubber_b_co2_storage.ToString("F1");
+
             display_temperature_eva2.text = "Temperature: " + telemetryEva2.temperature.ToString("F1");
+            display_temperature_eva2.color = GetTemperatureColor(telemetryEva2.temperature);
+
             display_coolant_ml_eva2.text = "Coolant ML: " + telemetryEva2.coolant_ml.ToString("F0");
             display_coolant_gas_pressure_eva2.text = "Coolant gas pressure: " + telemetryEva2.coolant_gas_pressure.ToString("F1");
             display_coolant_liquid_pressure_eva2.text = "Coolant liquid pressure: " + telemetryEva2.coolant_liquid_pressure.ToString("F1");
