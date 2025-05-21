@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class rotate_ev : MonoBehaviour
 {
-     float curr_z_rot;
+    float curr_z_rot;
+    public float actual_heading; 
 
     // Start is called before the first frame update
     void Start()
