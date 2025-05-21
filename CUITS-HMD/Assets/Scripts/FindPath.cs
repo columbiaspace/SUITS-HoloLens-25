@@ -47,6 +47,7 @@ public class FindPath : MonoBehaviour
    // This public method can be called when a button is clicked
    public void FindPathOnButtonClick()
    {
+       pathDrawer.ToggleVisibility();
        Debug.Log("========== FindPath: BUTTON CLICKED ==========");
 
 
@@ -70,7 +71,6 @@ public class FindPath : MonoBehaviour
        StartCoroutine(FetchEvaPositionAndProcessPath());
       
        // Toggle the visibility of the line by calling the method in PathDrawer
-       pathDrawer.ToggleVisibility();
   }
 
 
