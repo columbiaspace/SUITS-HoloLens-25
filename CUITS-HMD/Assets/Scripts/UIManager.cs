@@ -145,9 +145,27 @@ public class UIManager : MonoBehaviour
             RectTransform rect = card.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(800f, 300f); // 👈 Adjust width/height here
 
+            // TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
+            // timestampText.text = "rock_id " + entry.id + " at " + entry.timestamp;
+
             TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
-            timestampText.text = entry.timestamp;
-            timestampText.fontSize = 36f; // Set font size here
+
+            // ✅ Find the chemical with the highest value
+            string mostAbundantChemical = "N/A";
+            float maxValue = float.MinValue;
+
+            foreach (var kvp in entry.chemicalData)
+            {
+                if (kvp.Value > maxValue)
+                {
+                    maxValue = kvp.Value;
+                    mostAbundantChemical = kvp.Key;
+                }
+            }
+
+            // ✅ Set text
+            timestampText.text = $"rock_id {entry.id} at {entry.timestamp}\nMost Abundant: {mostAbundantChemical} ({maxValue})";
+            // timestampText.fontSize = 36f; // Set font size here
 
             int index = i; // local copy for lambda
             card.GetComponent<Button>().onClick.AddListener(() => ShowRecordDetails(index));
@@ -180,43 +198,6 @@ public class UIManager : MonoBehaviour
     }
 
 
-    // public void showDatabaseRecord()
-    // {
-    //     hideAllScreens();
-    //     RecordViewObj.SetActive(true);
-
-    //     string databaseOutput = "";
-
-    //     foreach (var entry in rockAnalysisDatabase)
-    //     {
-    //         databaseOutput += $"Analysis ID: {entry.id}\n";
-    //         databaseOutput += $"Timestamp: {entry.timestamp}\n";
-            
-    //         // Show Chemical Composition
-    //         foreach (var kvp in entry.chemicalData)
-    //         {
-    //             databaseOutput += $"{kvp.Key}: {kvp.Value}\n";
-    //         }
-
-    //         // Show Astronaut Notes
-    //         databaseOutput += $"Color: {entry.color}\n";
-    //         databaseOutput += $"Size: {entry.size}\n";
-    //         databaseOutput += $"Texture: {entry.texture}\n";
-    //         databaseOutput += $"Other Notes: {entry.otherNotes}\n";
-            
-    //         databaseOutput += "\n";
-    //     }
-
-    //     if (databaseOutputText != null)
-    //     {
-    //         databaseOutputText.text = databaseOutput;
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("databaseOutputText is NULL!");
-    //     }
-    // }
-
     public void showRockAnalysisScreen()
     {
         Debug.Log("Run Analysis Button Clicked");
@@ -236,36 +217,47 @@ public class UIManager : MonoBehaviour
 
         Debug.Log("Starting Rock Analysis...");
 
-        // Fetch rock data
         var results = analyzer.AnalyzeRock();
-
         Debug.Log("Finished fetching data from server.");
+
+        Debug.Log("Received chemical composition from server:");
+        foreach (var kvp in results)
+        {
+            Debug.Log($"{kvp.Key}: {kvp.Value}");
+        }
 
         yield return new WaitForSeconds(1.0f);
 
-        // Build output string
         string output = "EVA1 chemical composition:\n";
         foreach (var kvp in results)
         {
             output += $"{kvp.Key}: {kvp.Value}\n";
-            Debug.Log($"{kvp.Key}: {kvp.Value}"); 
         }
 
-        // Set the text field
         analysisOutputText.text = output;
-
-        // Now show the analysis screen
         AnalysisScreenObj.SetActive(true);
 
-        // Create new entry and save it
+        // Only create the entry, don't add to database yet
         int newId = rockAnalysisDatabase.Count > 0 ? rockAnalysisDatabase.Max(entry => entry.id) + 1 : 1;
         RockAnalysisEntry newEntry = new RockAnalysisEntry(newId, results);
         currentEntryBeingEdited = newEntry;
 
-        rockAnalysisDatabase.Add(newEntry);
-        SaveDatabase();
+        Debug.Log("Analysis ready, waiting for user to save record.");
+    }
 
-        Debug.Log("Finished coroutine completely");
+
+    public void SaveCurrentRecord()
+    {
+        if (currentEntryBeingEdited != null)
+        {
+            rockAnalysisDatabase.Add(currentEntryBeingEdited);
+            SaveDatabase();
+            Debug.Log("Current rock analysis saved to database.");
+        }
+        else
+        {
+            Debug.LogWarning("No record to save.");
+        }
     }
 
 
