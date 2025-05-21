@@ -4,8 +4,8 @@
 
 // public class compass_direction : MonoBehaviour
 // {
-//     public TSS_DATA tss;
-//     public GameObject Compass;
+//     // public TSS_DATA tss;
+//     public GameObject Compass-Canvas;
 //     float curr_z_rot;
 //     public float actual_heading;
 //     // Start is called before the first frame update
@@ -17,7 +17,14 @@
 //     // Update is called once per frame
 //     void Update()
 //     {
-//         actual_heading = (float)(tss.imu.dcu.eva1.heading);
+//         var backend = BackendDataService.Instance;
+//         if (backend == null || backend.LatestData == null || backend.LatestData.eva1 == null)
+//         {
+//             Debug.LogWarning("IMU data not available from backend.");
+//             return;
+//         }
+        
+//         actual_heading = (float)(backend.LatestData.eva1.heading);
 //         if(actual_heading < 0.0f){
 //             actual_heading += 360.0f;
 //         }
