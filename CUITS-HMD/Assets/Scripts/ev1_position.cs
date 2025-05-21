@@ -42,7 +42,7 @@ public class ev1_position : MonoBehaviour
             {
                 if (!hasReceivedPosition)
                 {
-                    Debug.Log($"[ev1_position] First position received: posx={posx}, posy={posy}");
+                    //Debug.Log($"[ev1_position] First position received: posx={posx}, posy={posy}");
                     hasReceivedPosition = true;
                 }
                 
