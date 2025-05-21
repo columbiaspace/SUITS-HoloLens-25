@@ -84,7 +84,6 @@ public class UIManager : MonoBehaviour
         ViewDatabaseObj.SetActive(false);
         AddNotesObj.SetActive(false);
         RecordViewObj.SetActive(false);
-
     }
 
     public void showMainScreen(){
@@ -148,9 +147,8 @@ public class UIManager : MonoBehaviour
             // TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
             // timestampText.text = "rock_id " + entry.id + " at " + entry.timestamp;
 
-            TextMeshProUGUI timestampText = card.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI cardText = card.GetComponentInChildren<TextMeshProUGUI>();
 
-            // ✅ Find the chemical with the highest value
             string mostAbundantChemical = "N/A";
             float maxValue = float.MinValue;
 
@@ -163,8 +161,7 @@ public class UIManager : MonoBehaviour
                 }
             }
 
-            // ✅ Set text
-            timestampText.text = $"rock_id {entry.id} at {entry.timestamp}\nMost Abundant: {mostAbundantChemical} ({maxValue})";
+            cardText.text = $"rock_id {entry.id} at {entry.timestamp}\nMost Abundant: {mostAbundantChemical} ({maxValue})";
             // timestampText.fontSize = 36f; // Set font size here
 
             int index = i; // local copy for lambda
@@ -203,6 +200,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Run Analysis Button Clicked");
         StartCoroutine(showAnalysisScreenCoroutine()); // <-- StartCoroutine required
     }
+
 
     public void showRockAnalysisScreenNoRun()
     {
