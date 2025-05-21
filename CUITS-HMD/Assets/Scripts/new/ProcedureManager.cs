@@ -9,23 +9,23 @@ using TMPro;
 
 public class ProcedureManager : MonoBehaviour
 {
-    // UI GameObjects for indicators (red stickers)
-    public GameObject EMU1_POWER_Indicator;
-    public GameObject EV1_SUPPLY_Indicator;
-    public GameObject EV1_WASTE_Indicator;
-    // public GameObject EV2_SUPPLY_Indicator; // Assuming single EV focus for now based on Egress.cs
-    // public GameObject EV2_WASTE_Indicator;  // If procedures are EV specific
-    // public GameObject EMU2_POWER_Indicator;
-    public GameObject EMU1_OXY_Indicator;
-    // public GameObject EMU2_OXY_Indicator;
-    public GameObject O2_VENT_Indicator;
-    public GameObject DEPRESS_PUMP_Indicator;
-    // Add more GameObjects for DCU switch indicators if they are separate visual elements
+    // UI SpriteRenderers for indicators (red stickers)
+    public SpriteRenderer EMU1_POWER_Indicator;
+    public SpriteRenderer EV1_SUPPLY_Indicator;
+    public SpriteRenderer EV1_WASTE_Indicator;
+    // public SpriteRenderer EV2_SUPPLY_Indicator; // Assuming single EV focus for now based on Egress.cs
+    // public SpriteRenderer EV2_WASTE_Indicator;  // If procedures are EV specific
+    // public SpriteRenderer EMU2_POWER_Indicator;
+    public SpriteRenderer EMU1_OXY_Indicator;
+    // public SpriteRenderer EMU2_OXY_Indicator;
+    public SpriteRenderer O2_VENT_Indicator;
+    public SpriteRenderer DEPRESS_PUMP_Indicator;
+    // Add more SpriteRenderer for DCU switch indicators if they are separate visual elements
 
     public TMP_Text instructionDisplay_Text;
 
-    // Store a mapping from logical item names (from backend) to GameObjects
-    private Dictionary<string, GameObject> procedureItemIndicators;
+    // Store a mapping from logical item names (from backend) to SpriteRenderers
+    private Dictionary<string, SpriteRenderer> procedureItemIndicators;
 
     void Start()
     {
@@ -37,21 +37,21 @@ public class ProcedureManager : MonoBehaviour
 
     void InitializeIndicators()
     {
-        procedureItemIndicators = new Dictionary<string, GameObject>();
+        procedureItemIndicators = new Dictionary<string, SpriteRenderer>();
         if (EMU1_POWER_Indicator != null) procedureItemIndicators["EMU1_POWER"] = EMU1_POWER_Indicator;
         if (EV1_SUPPLY_Indicator != null) procedureItemIndicators["EV1_WATER_SUPPLY"] = EV1_SUPPLY_Indicator; // Match potential backend key
         if (EV1_WASTE_Indicator != null) procedureItemIndicators["EV1_WATER_WASTE"] = EV1_WASTE_Indicator;   // Match potential backend key
         if (EMU1_OXY_Indicator != null) procedureItemIndicators["EMU1_OXY"] = EMU1_OXY_Indicator;
         if (O2_VENT_Indicator != null) procedureItemIndicators["O2_VENT"] = O2_VENT_Indicator;
         if (DEPRESS_PUMP_Indicator != null) procedureItemIndicators["DEPRESS_PUMP"] = DEPRESS_PUMP_Indicator;
-        // Add mappings for other indicators (EV2, DCU items if they have separate GameObjects)
+        // Add mappings for other indicators (EV2, DCU items if they have separate SpriteRenderers)
     }
 
     void SetAllIndicators(bool isActive)
     {
         foreach (var indicator in procedureItemIndicators.Values)
         {
-            if (indicator != null) indicator.SetActive(isActive);
+            if (indicator != null) indicator.enabled = isActive;
         }
     }
 
@@ -81,13 +81,13 @@ public class ProcedureManager : MonoBehaviour
             {
                 foreach (var item in currentStep.actionable_items)
                 {
-                    if (procedureItemIndicators.TryGetValue(item.item_name, out GameObject indicator))
+                    if (procedureItemIndicators.TryGetValue(item.item_name, out SpriteRenderer indicator))
                     {
                         if (indicator != null)
                         {
                             // Show indicator if the backend says the state doesn't match
                             // (i.e., user needs to flip this switch)
-                            indicator.SetActive(!item.current_state_matches);
+                            indicator.enabled = !item.current_state_matches;
                         }
                     }
                     else
