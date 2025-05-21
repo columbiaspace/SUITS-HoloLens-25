@@ -239,7 +239,7 @@ public class BackendDataService : MonoBehaviour
 
     public IEnumerator FetchDataFromServer()
     {
-        string fullUrl = backendBaseUrl + allDataEndpoint;
+        string fullUrl = "http://" + Globals.backendIP + ":8000" + allDataEndpoint;
         using (UnityWebRequest request = UnityWebRequest.Get(fullUrl))
         {
             yield return request.SendWebRequest();
@@ -258,6 +258,7 @@ public class BackendDataService : MonoBehaviour
                     LatestData = JsonConvert.DeserializeObject<AllDataResponse>(json, settings);
                     if (LatestData != null)
                     {
+                        Debug.Log($"BackendIP: {Globals.backendIP}, EVNum: {Globals.evNum}");
                          Debug.Log($"Successfully fetched and parsed data from {fullUrl}.");
                     }
                     else
