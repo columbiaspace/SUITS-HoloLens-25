@@ -1,48 +1,98 @@
 using UnityEngine;
 using TMPro;
-
-using System.Collections.Generic;
-using System.Collections;
-using UnityEngine.Networking;
+using System;
 
 public class EvaTime : MonoBehaviour
 {
     public TMP_Text display; // Assign this in Unity Inspector
-    private float elapsedTime = 0f; // Start at 0:00
-    private bool timerActive = false; // Timer starts paused
-
+    public bool showHoursMinutesSeconds = true; // Format as HH:MM:SS vs raw seconds
+    
+    private float elapsedTime = 0f;
+    private double lastTimestamp = 0;
+    private float lastInternalUpdateTime = 0f;
+    
     void Start()
     {
-        display.text = "0:00"; // Initial display
-        StartCoroutine(GetDataFromServer()); // Start the coroutine to fetch data from the server
+        if (display == null)
+        {
+            Debug.LogError("EvaTime: Text display not assigned in inspector!");
+            enabled = false;
+            return;
+        }
+        
+        display.text = "00:00"; // Initial display
+        Debug.Log("EvaTime: Started");
     }
 
-    IEnumerator GetDataFromServer()
+    void Update()
     {
-        while (true) {
-            string url = "http://127.0.0.1:8000/all";
-            UnityWebRequest request = UnityWebRequest.Get(url); // Create a GET request to the FastAPI endpoint
-            yield return request.SendWebRequest(); // Tells Unity to wait for the request to complete
-
-            if (request.result == UnityWebRequest.Result.Success) // Check if the request was successful
+        // Update time from backend data if available
+        if (BackendDataService.Instance != null && BackendDataService.Instance.LatestData != null)
+        {
+            float currentEvaTime = BackendDataService.Instance.LatestData.eva_time;
+            double currentTimestamp = BackendDataService.Instance.LatestData.last_updated;
+            
+            // Only update display if we got new data
+            if (currentTimestamp > lastTimestamp)
             {
-                string json = request.downloadHandler.text; // Get the raw JSON string returned by FastAPI
-                TimeResponse data = JsonUtility.FromJson<TimeResponse>(json); // Turns that JSON into a C# object
-
-                display.text = $"{data.eva_time}"; // Update the display with the time from the API
-
-                // Convert API data to Vector3 and update the positions array in DropPin
-                //dropPin.SetPositions(new Vector3[] { data.ToVector3() });
-                //textDisplay.text = $"posx: {data.posx}\nposy: {data.posy}\nheading: {data.heading}";
+                lastTimestamp = currentTimestamp;
+                lastInternalUpdateTime = Time.time;
+                elapsedTime = currentEvaTime;
+                
+                UpdateTimeDisplay(elapsedTime);
+                Debug.Log($"EvaTime: Updated from backend to {elapsedTime}");
             }
             else
             {
-                Debug.LogError("API Error: " + request.error); // If the request fails, log the error in console
+                // Smoothly increment timer locally between backend updates
+                float timeSinceLastUpdate = Time.time - lastInternalUpdateTime;
+                if (timeSinceLastUpdate > 0.5f) // Only update display every 0.5 seconds
+                {
+                    elapsedTime += timeSinceLastUpdate;
+                    lastInternalUpdateTime = Time.time;
+                    UpdateTimeDisplay(elapsedTime);
+                }
             }
-            yield return new WaitForSecondsRealtime(1f); // Adjust this delay as needed
+        }
+        else
+        {
+            // Handle case where data isn't available yet
+            if (BackendDataService.Instance == null)
+            {
+                display.text = "ERR: No Backend";
+                Debug.LogError("EvaTime: BackendDataService not found in scene!");
+            }
+            else
+            {
+                display.text = "Connecting...";
+            }
         }
     }
-
+    
+    private void UpdateTimeDisplay(float seconds)
+    {
+        if (showHoursMinutesSeconds)
+        {
+            // Format as HH:MM:SS
+            TimeSpan timeSpan = TimeSpan.FromSeconds(seconds);
+            
+            if (timeSpan.Hours > 0)
+            {
+                display.text = string.Format("{0:D2}:{1:D2}:{2:D2}", 
+                    timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
+            }
+            else
+            {
+                display.text = string.Format("{0:D2}:{1:D2}", 
+                    timeSpan.Minutes, timeSpan.Seconds);
+            }
+        }
+        else
+        {
+            // Just display raw seconds rounded to nearest whole number
+            display.text = Mathf.RoundToInt(seconds).ToString();
+        }
+    }
 }
 
 

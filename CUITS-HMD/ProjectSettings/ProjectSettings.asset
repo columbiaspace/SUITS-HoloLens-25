@@ -781,10 +781,10 @@ PlayerSettings:
   metroPackageName: CUITS-HMD
   metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
-  metroCertificatePassword: 
-  metroCertificateSubject: DefaultCompany
-  metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 00231e21687bdb01
+  metroCertificatePassword: ybexu
+  metroCertificateSubject: CSI - SUITS
+  metroCertificateIssuer: CSI - SUITS
+  metroCertificateNotAfter: 008e9feafce8dc01
   metroApplicationDescription: CUITS-HMD
   wsaImages: {}
   metroTileShortName: CUITS-HMD

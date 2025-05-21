@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.1341472, b: 0.121078566, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -375,8 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71e11af1f3e0451cabbd2ff5095bfbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TSS: {fileID: 2086301970}
-  display: {fileID: 1122374945}
 --- !u!114 &909794919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,8 +543,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9003adf9e736294fb7388e2ca82d529, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TSS: {fileID: 2086301970}
-  display: {fileID: 1745217272}
 --- !u!114 &1040242973 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1761606812862949621, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
@@ -742,9 +738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efef7ddb080dc46f08ad11959f6d3973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tss: {fileID: 2086301970}
-  Compass: {fileID: 1178228863}
-  actual_heading: 0
 --- !u!114 &1178228866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1337,28 +1330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19853911caa504f62b8f39f64bba59b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2086301970 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 237030699962456615, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-  m_PrefabInstance: {fileID: 2137082601}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a970a6a036c7a47d49ecad3465cd029b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2086301972 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3317199719561276437, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-  m_PrefabInstance: {fileID: 2137082601}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 363ec6c8389bb2e47bb1b6e088512976, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2137082601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1862,7 +1833,7 @@ PrefabInstance:
     - target: {fileID: 6076882833217603164, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2086301972}
+      objectReference: {fileID: 0}
     - target: {fileID: 6076882833217603164, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
       propertyPath: <OnClicked>k__BackingField.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: drooop_pin
@@ -5371,6 +5342,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8964040609979551880, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
+      propertyPath: backendBaseUrl
+      value: http://172.20.3.219:8000
+      objectReference: {fileID: 0}
     - target: {fileID: 8983544949583155655, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5401,21 +5376,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4359035880951563784, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 133111155654219311, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8268934119318048463, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2923200671919688187, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 8172460109196202353, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 7413096802660111166, guid: d34b42870cf9c2d47a3568c488779818, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
